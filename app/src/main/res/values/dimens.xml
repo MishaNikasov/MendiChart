@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="stroke_sickness">1dp</dimen>
+    <color name="cell_stroke_color">#BCBCBC</color>
+</resources>

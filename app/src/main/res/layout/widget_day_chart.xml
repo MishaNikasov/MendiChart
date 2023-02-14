@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:parentTag="android.widget.FrameLayout">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_chart" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="52dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:padding="2dp"
+        android:text="Neural Activity"
+        android:textColor="#FF595E"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="152dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:padding="2dp"
+        android:text="Control"
+        android:textColor="#8AC926"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="252dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:padding="2dp"
+        android:text="Resilience"
+        android:textColor="#FFCA3A"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="82dp"
+        android:backgroundTint="#FF595E"
+        android:background="@drawable/oval"
+        android:gravity="center"
+        android:layout_gravity="end"
+        android:padding="2dp"
+        android:text="Resilience"
+        android:textColor="#FFCA3A"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+</merge>
