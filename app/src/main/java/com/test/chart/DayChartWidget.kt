@@ -4,8 +4,10 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
-import android.widget.ScrollView
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.test.chart.adapter.ChartAdapter
+import com.test.chart.adapter.ChartItemDecoration
 import com.test.chart.databinding.WidgetDayChartBinding
 
 class DayChartWidget @JvmOverloads constructor(
@@ -18,7 +20,7 @@ class DayChartWidget @JvmOverloads constructor(
 
     private val chartAdapter: ChartAdapter by lazy { ChartAdapter() }
 
-    var chartData: List<Item> = emptyList()
+    var chartData: List<ChartItem.DayItem> = emptyList()
 
     init {
         setupRecycler()
@@ -31,9 +33,10 @@ class DayChartWidget @JvmOverloads constructor(
                 orientation = LinearLayoutManager.HORIZONTAL
                 reverseLayout = true
             }
+            addItemDecoration(ChartItemDecoration(context))
         }
-        val list = mutableListOf<Item>()
-        repeat(10) { list.add(Item(it.toFloat(), "")) }
+        val list = mutableListOf<ChartItem.DayItem>()
+        repeat(10) { list.add(ChartItem.DayItem(it.toFloat(), "")) }
         chartAdapter.list = list
     }
 

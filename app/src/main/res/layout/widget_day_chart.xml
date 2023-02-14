@@ -2,13 +2,15 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:parentTag="android.widget.FrameLayout">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingEnd="80dp"
         tools:listitem="@layout/item_chart" />
 
     <TextView
@@ -53,15 +55,17 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="end"
         android:layout_marginStart="16dp"
         android:layout_marginTop="82dp"
-        android:backgroundTint="#FF595E"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/oval"
+        android:backgroundTint="#FF595E"
         android:gravity="center"
-        android:layout_gravity="end"
-        android:padding="2dp"
-        android:text="Resilience"
-        android:textColor="#FFCA3A"
+        android:paddingHorizontal="4dp"
+        android:paddingVertical="2dp"
+        android:text="+25%"
+        android:textColor="@color/white"
         android:textSize="12sp"
         android:textStyle="bold" />
 

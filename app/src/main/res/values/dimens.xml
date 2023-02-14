@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="stroke_sickness">1dp</dimen>
+    <dimen name="chart_item_width">40dp</dimen>
+    <dimen name="header_cell_height">40dp</dimen>
+    <dimen name="footer_cell_height">40dp</dimen>
+    <dimen name="item_cell_height">100dp</dimen>
+    <dimen name="stroke_sickness">0.7dp</dimen>
     <color name="cell_stroke_color">#BCBCBC</color>
 </resources>
