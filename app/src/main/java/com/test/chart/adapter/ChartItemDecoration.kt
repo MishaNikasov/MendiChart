@@ -1,14 +1,14 @@
 package com.test.chart.adapter
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.DashPathEffect
-import android.graphics.Paint
-import android.graphics.Rect
+import android.graphics.*
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
+import com.test.chart.ChartItem
 import com.test.chart.R
+import com.test.chart.byPattern
+import com.test.chart.px
 import kotlin.math.roundToInt
 
 private const val DASH_GAP = 7f
@@ -18,15 +18,21 @@ class ChartItemDecoration(private val context: Context) : ItemDecoration() {
 
     private val mBounds = Rect()
     private val paint: Paint
-        get() {
-            return Paint().apply {
-                color = ContextCompat.getColor(context, STROKE_COLOR)
-                pathEffect = DashPathEffect(floatArrayOf(DASH_GAP, DASH_GAP, DASH_GAP, DASH_GAP), 0f)
-                style = Paint.Style.STROKE
-            }
+        get() = Paint().apply {
+            color = ContextCompat.getColor(context, STROKE_COLOR)
+            isAntiAlias = true
+            pathEffect = DashPathEffect(floatArrayOf(DASH_GAP, DASH_GAP, DASH_GAP, DASH_GAP), 0f)
+            style = Paint.Style.STROKE
+        }
+    private val textPaint: Paint
+        get() = Paint().apply {
+            color = (Color.BLACK)
+            isAntiAlias = true
+            style = Paint.Style.FILL
+            textSize = context.px(R.dimen.label_text_size)
         }
 
-    override fun onDrawOver(canvas: Canvas, parent: RecyclerView, state: RecyclerView.State) {
+    override fun onDraw(canvas: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         canvas.save()
         val top: Int
         val bottom: Int
@@ -43,16 +49,26 @@ class ChartItemDecoration(private val context: Context) : ItemDecoration() {
         }
 
         val childCount = parent.childCount
-        for (i in 0 until childCount) {
-            when(i) {
-                0 -> Unit
-                else -> {
-                    val child = parent.getChildAt(i)
-                    parent.layoutManager!!.getDecoratedBoundsWithMargins(child, mBounds)
-                    val right = mBounds.right + child.translationX.roundToInt()
-                    val left: Int = right
-                    canvas.drawLine(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat(), paint)
+        for (index in 0 until childCount) {
+            val child = parent.getChildAt(index)
+            val position = parent.getChildLayoutPosition(child)
+            val item = (parent.adapter as? ChartAdapter)?.getItem(index)
+            parent.layoutManager!!.getDecoratedBoundsWithMargins(child, mBounds)
+            val right = mBounds.right + child.translationX.roundToInt()
+            val left: Int = right
+            when (item) {
+                is ChartItem.DayItem -> {
+                    val dateText = item.date.byPattern("EEE")
+                    val textWidth = textPaint.measureText(dateText)
+                    val textStartPos = left.toFloat() - (context.px(R.dimen.day_chart_item_width) / 2) - (textWidth / 2)
+                    val textTopPosition = top.toFloat() + (context.px(R.dimen.header_cell_height) / 2) + (context.px(R.dimen.label_text_size) / 3)
+                    canvas.drawText(dateText, textStartPos, textTopPosition, textPaint)
+                    if (position != 0)
+                        canvas.drawLine(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat(), paint)
                 }
+                is ChartItem.MonthItem -> TODO()
+                is ChartItem.SixMonthItem -> TODO()
+                null -> Unit
             }
         }
         canvas.restore()

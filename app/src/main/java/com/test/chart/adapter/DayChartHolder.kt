@@ -4,11 +4,8 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.test.chart.ChartItem
-import com.test.chart.ChartUtils
-import com.test.chart.R
+import com.test.chart.*
 import com.test.chart.databinding.ItemChartBinding
-import com.test.chart.inflater
 
 class DayChartHolder(private val binding: ItemChartBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -17,12 +14,27 @@ class DayChartHolder(private val binding: ItemChartBinding) : RecyclerView.ViewH
         fun inflate(parent: ViewGroup) = DayChartHolder(ItemChartBinding.inflate(parent.inflater, parent, false))
     }
 
-    fun bind(item: ChartItem.DayItem) {
+    fun bind(
+        chartUtils: ChartUtils,
+        item: ChartItem.DayItem
+    ) {
         with(binding) {
             val neuralActivityCellLp = neuralActivity.layoutParams
             neuralActivity.layoutParams = FrameLayout.LayoutParams(
                 neuralActivityCellLp.width,
-                ChartUtils.calculateCellHeight(item.neuralActivity),
+                chartUtils.calculateCellHeight(ChartType.NeuralActivity(item.neuralActivity)),
+                Gravity.BOTTOM or Gravity.CENTER
+            )
+            val controlCellLp = control.layoutParams
+            control.layoutParams = FrameLayout.LayoutParams(
+                controlCellLp.width,
+                chartUtils.calculateCellHeight(ChartType.Control(item.control)),
+                Gravity.BOTTOM or Gravity.CENTER
+            )
+            val resilienceCellLp = resilience.layoutParams
+            resilience.layoutParams = FrameLayout.LayoutParams(
+                resilienceCellLp.width,
+                chartUtils.calculateCellHeight(ChartType.Resilience(item.resilience)),
                 Gravity.BOTTOM or Gravity.CENTER
             )
         }

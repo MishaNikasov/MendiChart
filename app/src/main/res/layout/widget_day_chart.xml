@@ -14,43 +14,49 @@
         tools:listitem="@layout/item_chart" />
 
     <TextView
+        android:id="@+id/neuralActivityLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="52dp"
-        android:background="@color/white"
+        android:background="@drawable/oval"
         android:gravity="center"
         android:padding="2dp"
-        android:text="Neural Activity"
+        android:paddingHorizontal="1dp"
+        android:text="@string/neural_activity"
         android:textColor="#FF595E"
         android:textSize="12sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:layout_marginTop="42dp" />
 
     <TextView
+        android:id="@+id/controlLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="152dp"
-        android:background="@color/white"
+        android:background="@drawable/oval"
         android:gravity="center"
         android:padding="2dp"
-        android:text="Control"
+        android:paddingHorizontal="1dp"
+        android:text="@string/control"
         android:textColor="#8AC926"
         android:textSize="12sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:layout_marginTop="142dp" />
 
     <TextView
+        android:id="@+id/resilienceLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="252dp"
-        android:background="@color/white"
+        android:background="@drawable/oval"
         android:gravity="center"
         android:padding="2dp"
-        android:text="Resilience"
+        android:paddingHorizontal="1dp"
+        android:text="@string/resilience"
         android:textColor="#FFCA3A"
         android:textSize="12sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:layout_marginTop="242dp" />
 
     <TextView
         android:layout_width="wrap_content"
