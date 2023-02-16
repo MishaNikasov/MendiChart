@@ -1,8 +1,7 @@
-package com.test.chart.adapter
+package com.test.chart.adapter.holder
 
 import android.content.res.ColorStateList
 import android.view.Gravity
-import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
@@ -12,12 +11,11 @@ import com.test.chart.adapter.model.ChartItemWrapper
 import com.test.chart.adapter.model.FocusState
 import com.test.chart.databinding.ItemChartBinding
 
-class DayChartHolder(private val binding: ItemChartBinding) : RecyclerView.ViewHolder(binding.root) {
+abstract class ChartViewHolder(private val binding: ItemChartBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    companion object {
-        val ITEM_TYPE = R.layout.item_chart
-        fun inflate(parent: ViewGroup) = DayChartHolder(ItemChartBinding.inflate(parent.inflater, parent, false))
-    }
+    abstract fun calculateCellWidth()
+
+    abstract val datePattern: String
 
     fun bind(
         chartUtils: ChartUtils,
@@ -25,6 +23,7 @@ class DayChartHolder(private val binding: ItemChartBinding) : RecyclerView.ViewH
         selectListener: (ChartItem) -> Unit
     ) {
         with(binding) {
+            calculateCellWidth()
             val neuralActivityCellLp = neuralActivity.layoutParams
             val item = wrapper.item
             neuralActivity.layoutParams = FrameLayout.LayoutParams(
@@ -44,11 +43,7 @@ class DayChartHolder(private val binding: ItemChartBinding) : RecyclerView.ViewH
                 chartUtils.calculateCellHeight(item.resilience, ActivityType.Resilience),
                 Gravity.BOTTOM or Gravity.CENTER
             )
-            val dateText = when (item) {
-                is ChartItem.DayItem -> item.date.byPattern("EEE")
-                is ChartItem.MonthItem -> item.date.byPattern("EEE")
-                is ChartItem.SixMonthItem -> item.date.byPattern("EEE")
-            }
+            val dateText = item.date.byPattern(datePattern)
             bottomDate.text = dateText
             topDate.text = dateText
             when (wrapper.focusState) {
@@ -74,4 +69,5 @@ class DayChartHolder(private val binding: ItemChartBinding) : RecyclerView.ViewH
             root.setOnClickListener { selectListener(item) }
         }
     }
+
 }

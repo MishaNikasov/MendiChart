@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parentLayout"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="@dimen/day_chart_item_width"
+    android:layout_width="@dimen/day_chart_cell_width"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
@@ -21,7 +22,7 @@
         android:layout_height="@dimen/header_cell_height"
         android:layout_gravity="center"
         android:background="@drawable/top_border_bg"
-        android:elevation="3dp"
+        android:elevation="1dp"
         android:gravity="center"
         android:textColor="@color/white"
         android:textSize="12sp"
@@ -107,7 +108,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/footer_cell_height"
         android:background="@drawable/bottom_border_bg"
-        android:elevation="3dp"
+        android:elevation="1dp"
         android:gravity="center"
         android:textColor="@color/white"
         android:textSize="12sp"
@@ -128,7 +129,7 @@
         android:layout_height="0dp"
         android:layout_gravity="center"
         android:background="@color/black"
-        android:elevation="2dp"
+        android:elevation="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/bottomDate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

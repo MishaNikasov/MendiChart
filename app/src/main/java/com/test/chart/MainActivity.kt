@@ -1,6 +1,7 @@
 package com.test.chart
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.test.chart.adapter.model.ChartItemWrapper
 import com.test.chart.adapter.model.FocusState
@@ -11,24 +12,17 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private var list: List<ChartItemWrapper> = emptyList()
+    private var dayList: List<ChartItemWrapper> = emptyList()
         set(value) {
             field = value
             binding.dayChart.chartData = value
         }
 
-    private fun prepareList(chartItem: ChartItem) {
-        val inFocusItem = list.firstOrNull { it.focusState == FocusState.InFocus }
-        list = when {
-            inFocusItem?.item?.id == chartItem.id -> list.map { wrapper -> ChartItemWrapper(wrapper.item, FocusState.Preview) }
-            else -> list.map { wrapper ->
-                if (wrapper.item.id == chartItem.id)
-                    ChartItemWrapper(wrapper.item, FocusState.InFocus)
-                else
-                    ChartItemWrapper(wrapper.item, FocusState.OutOfFocus)
-            }
+    private var monthList: List<ChartItemWrapper> = emptyList()
+        set(value) {
+            field = value
+            binding.monthChart.chartData = value
         }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,8 +30,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupDayChart()
+        setupMonthChart()
+    }
+
+    private fun setupDayChart() {
         val q = mutableListOf<ChartItemWrapper>()
-        repeat(30) {
+        repeat(300) {
             q.add(
                 ChartItemWrapper(
                     item = ChartItem.DayItem(
@@ -51,11 +50,32 @@ class MainActivity : AppCompatActivity() {
                 )
             )
         }
+        dayList = q
+        binding.dayChart.chartData = dayList
+    }
 
-        list = q
 
-        binding.dayChart.chartData = list
-        binding.dayChart.selectListener = { prepareList(it) }
+    private fun setupMonthChart() {
+        val q = mutableListOf<ChartItemWrapper>()
+        repeat(300) {
+            q.add(
+                ChartItemWrapper(
+                    item = ChartItem.MonthItem(
+                        id = generateId(),
+                        date = Date(),
+                        neuralActivity = kotlin.random.Random.nextInt(2, 20).toFloat(),
+                        control = kotlin.random.Random.nextInt(2, 20).toFloat(),
+                        resilience = kotlin.random.Random.nextInt(2, 20).toFloat()
+                    ),
+                    focusState = FocusState.Preview
+                )
+            )
+        }
+        monthList = q
+        binding.monthChart.chartData = monthList
+        binding.monthChart.selectListener = {
+            Log.d("TAG", "$it")
+        }
     }
 
 }

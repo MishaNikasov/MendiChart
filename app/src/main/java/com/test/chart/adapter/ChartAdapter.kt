@@ -5,12 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.test.chart.ChartItem
 import com.test.chart.ChartUtils
+import com.test.chart.adapter.holder.ChartViewHolder
+import com.test.chart.adapter.holder.DayViewHolder
+import com.test.chart.adapter.holder.MonthViewHolder
+import com.test.chart.adapter.holder.SixMonthViewHolder
 import com.test.chart.adapter.model.ChartItemWrapper
 
-class ChartAdapter(private val context: Context) : RecyclerView.Adapter<ViewHolder>() {
+class ChartAdapter(private val context: Context) : RecyclerView.Adapter<ChartViewHolder>() {
 
     private val callback = object : DiffUtil.ItemCallback<ChartItemWrapper>() {
         override fun areItemsTheSame(oldItem: ChartItemWrapper, newItem: ChartItemWrapper) = oldItem.item.id == newItem.item.id
@@ -36,23 +39,29 @@ class ChartAdapter(private val context: Context) : RecyclerView.Adapter<ViewHold
 
     override fun getItemViewType(position: Int): Int {
         return when (list[position].item) {
-            is ChartItem.DayItem -> DayChartHolder.ITEM_TYPE
-            else -> -1
+            is ChartItem.DayItem -> DayViewHolder.ITEM_TYPE
+            is ChartItem.MonthItem -> MonthViewHolder.ITEM_TYPE
+            is ChartItem.SixMonthItem -> SixMonthViewHolder.ITEM_TYPE
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChartViewHolder {
         return when (viewType) {
-            DayChartHolder.ITEM_TYPE -> DayChartHolder.inflate(parent)
+            DayViewHolder.ITEM_TYPE -> DayViewHolder.inflate(parent)
+            MonthViewHolder.ITEM_TYPE -> MonthViewHolder.inflate(parent)
+            SixMonthViewHolder.ITEM_TYPE -> SixMonthViewHolder.inflate(parent)
             else -> throw java.lang.Exception()
         }
     }
 
     override fun getItemCount() = list.size
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ChartViewHolder, position: Int) {
         val item = list[position]
-        when (holder) {            is DayChartHolder -> holder.bind(chartUtils, item, selectListener)
+        when (holder) {
+            is DayViewHolder -> holder.bind(chartUtils, item, selectListener)
+            is MonthViewHolder -> holder.bind(chartUtils, item, selectListener)
+            is SixMonthViewHolder -> holder.bind(chartUtils, item, selectListener)
         }
     }
 }

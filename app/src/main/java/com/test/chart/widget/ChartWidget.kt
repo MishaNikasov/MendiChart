@@ -1,18 +1,22 @@
-package com.test.chart
+package com.test.chart.widget
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.test.chart.ChartItem
+import com.test.chart.R
 import com.test.chart.adapter.ChartAdapter
 import com.test.chart.adapter.ChartItemDecoration
 import com.test.chart.adapter.model.ChartItemWrapper
+import com.test.chart.adapter.model.FocusState
 import com.test.chart.databinding.WidgetDayChartBinding
+import com.test.chart.dp
+import com.test.chart.px
 import kotlin.math.roundToInt
 
-class DayChartWidget @JvmOverloads constructor(
+class ChartWidget @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyle: Int = 0
@@ -29,10 +33,6 @@ class DayChartWidget @JvmOverloads constructor(
         }
 
     var selectListener: (ChartItem) -> Unit = { }
-        set(value) {
-            field = value
-            chartAdapter.selectListener = value
-        }
 
     init {
         setupRecycler()
@@ -64,6 +64,19 @@ class DayChartWidget @JvmOverloads constructor(
         }
     }
 
+    private fun handleFocusState(chartItem: ChartItem) {
+        val inFocusItem = chartData.firstOrNull { it.focusState == FocusState.InFocus }
+        chartData = when (inFocusItem?.item?.id) {
+            chartItem.id -> chartData.map { wrapper -> ChartItemWrapper(wrapper.item, FocusState.Preview) }
+            else -> chartData.map { wrapper ->
+                if (wrapper.item.id == chartItem.id)
+                    ChartItemWrapper(wrapper.item, FocusState.InFocus)
+                else
+                    ChartItemWrapper(wrapper.item, FocusState.OutOfFocus)
+            }
+        }
+    }
+
     private fun setupRecycler() {
         with(binding.recycler) {
             adapter = chartAdapter
@@ -78,6 +91,10 @@ class DayChartWidget @JvmOverloads constructor(
 
     private fun refresh() {
         chartAdapter.submitList(chartData)
+        chartAdapter.selectListener = { item ->
+            handleFocusState(item)
+            selectListener(item)
+        }
     }
 
 }

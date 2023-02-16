@@ -61,13 +61,26 @@ class ChartItemDecoration(private val context: Context) : ItemDecoration() {
                 is ChartItem.DayItem -> {
                     val dateText = item.date.byPattern("EEE")
                     val textWidth = textPaint.measureText(dateText)
-                    val textStartPos = left.toFloat() - (context.px(R.dimen.day_chart_item_width) / 2) - (textWidth / 2)
+                    val textStartPos = left.toFloat() - (context.px(R.dimen.day_chart_cell_width) / 2) - (textWidth / 2)
                     val textTopPosition = top.toFloat() + context.px(R.dimen.header_cell_height) + (context.px(R.dimen.header_cell_height) / 2) + (context.px(R.dimen.label_text_size) / 3)
+                    val textBottomPosition = bottom.toFloat() - context.px(R.dimen.footer_cell_height) - (context.px(R.dimen.label_text_size) / 2)
                     canvas.drawText(dateText, textStartPos, textTopPosition, textPaint)
+                    canvas.drawText(dateText, textStartPos, textBottomPosition, textPaint)
                     if (position != 0)
-                        canvas.drawLine(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat(), paint)
+                        canvas.drawLine(left.toFloat(), top.toFloat() + context.px(R.dimen.header_cell_height), right.toFloat(), bottom.toFloat() - + context.px(R.dimen.footer_cell_height), paint)
                 }
-                is ChartItem.MonthItem -> TODO()
+                is ChartItem.MonthItem -> {
+                    when {
+                        position == 0 -> Unit
+                        position % 4 == 0 -> {
+                            val dateText = item.date.byPattern("MMM")
+                            val textStartPos = left.toFloat() + context.px(R.dimen.date_label_start_margin)
+                            val textTopPosition = top.toFloat() + context.px(R.dimen.header_cell_height) + (context.px(R.dimen.header_cell_height) / 2) + (context.px(R.dimen.label_text_size) / 3)
+                            canvas.drawText(dateText, textStartPos, textTopPosition, textPaint)
+                            canvas.drawLine(left.toFloat(), top.toFloat() + context.px(R.dimen.header_cell_height), right.toFloat(), bottom.toFloat() - + context.px(R.dimen.footer_cell_height), paint)
+                        }
+                    }
+                }
                 is ChartItem.SixMonthItem -> TODO()
                 null -> Unit
             }
