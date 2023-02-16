@@ -5,9 +5,12 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.test.chart.adapter.ChartAdapter
 import com.test.chart.adapter.ChartItemDecoration
+import com.test.chart.adapter.model.ChartItemWrapper
 import com.test.chart.databinding.WidgetDayChartBinding
+import kotlin.math.roundToInt
 
 class DayChartWidget @JvmOverloads constructor(
     context: Context,
@@ -19,10 +22,16 @@ class DayChartWidget @JvmOverloads constructor(
 
     private val chartAdapter: ChartAdapter by lazy { ChartAdapter(context) }
 
-    var chartData: List<ChartItem.DayItem> = emptyList()
+    var chartData: List<ChartItemWrapper> = emptyList()
         set(value) {
             field = value
             refresh()
+        }
+
+    var selectListener: (ChartItem) -> Unit = { }
+        set(value) {
+            field = value
+            chartAdapter.selectListener = value
         }
 
     init {
@@ -31,7 +40,28 @@ class DayChartWidget @JvmOverloads constructor(
     }
 
     private fun setupLabels() {
+        with(binding) {
+            val headerCellHeight = context.px(R.dimen.header_cell_height).roundToInt()
+            val itemCellHeight = context.px(R.dimen.item_cell_height).roundToInt()
+            val labelStartMargin = context.px(R.dimen.label_start_margin).roundToInt()
+            val labelTopMargin = context.px(R.dimen.label_top_margin).roundToInt()
 
+            val neuralActivityLp = neuralActivityLabel.layoutParams
+            neuralActivityLabel.layoutParams = LayoutParams(neuralActivityLp.height, neuralActivityLp.width).apply {
+                val topMargin = (headerCellHeight * 2) + labelTopMargin
+                setMargins(16.dp(), topMargin, 0, 0)
+            }
+            val controlLabelLp = controlLabel.layoutParams
+            controlLabel.layoutParams = LayoutParams(controlLabelLp.height, controlLabelLp.width).apply {
+                val topMargin = (headerCellHeight * 2) + itemCellHeight + labelTopMargin
+                setMargins(labelStartMargin, topMargin, 0, 0)
+            }
+            val resilienceLabelLp = resilienceLabel.layoutParams
+            resilienceLabel.layoutParams = LayoutParams(resilienceLabelLp.height, resilienceLabelLp.width).apply {
+                val topMargin = (headerCellHeight * 2) + (itemCellHeight * 2) + labelTopMargin
+                setMargins(labelStartMargin, topMargin, 0, 0)
+            }
+        }
     }
 
     private fun setupRecycler() {
@@ -40,6 +70,7 @@ class DayChartWidget @JvmOverloads constructor(
             layoutManager = LinearLayoutManager(context).apply {
                 orientation = LinearLayoutManager.HORIZONTAL
                 reverseLayout = true
+                itemAnimator = null
             }
             addItemDecoration(ChartItemDecoration(context))
         }

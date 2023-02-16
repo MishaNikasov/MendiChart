@@ -9,6 +9,8 @@
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        tools:itemCount="1"
+        android:descendantFocusability="blocksDescendants"
         android:clipToPadding="false"
         android:paddingEnd="80dp"
         tools:listitem="@layout/item_chart" />
@@ -58,21 +60,99 @@
         android:textStyle="bold"
         tools:layout_marginTop="242dp" />
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/neutralActivityLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="82dp"
+        android:layout_marginEnd="16dp">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/dotted_line"
+            android:backgroundTint="@color/neural_activity_dash_color" />
+
+        <TextView
+            android:id="@+id/neutralActivityValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/oval"
+            android:backgroundTint="@color/neural_activity_selected_color"
+            android:gravity="center"
+            android:paddingHorizontal="4dp"
+            android:paddingVertical="2dp"
+            android:text="+25%"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/controlActivityLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="182dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/oval"
-        android:backgroundTint="#FF595E"
-        android:gravity="center"
-        android:paddingHorizontal="4dp"
-        android:paddingVertical="2dp"
-        android:text="+25%"
-        android:textColor="@color/white"
-        android:textSize="12sp"
-        android:textStyle="bold" />
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/dotted_line"
+            android:backgroundTint="@color/control_dash_color" />
+
+        <TextView
+            android:id="@+id/controlValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="@drawable/oval"
+            android:backgroundTint="@color/control_selected_color"
+            android:gravity="center"
+            android:paddingHorizontal="4dp"
+            android:paddingVertical="2dp"
+            android:text="+25%"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/resilienceLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="282dp"
+        android:layout_marginEnd="16dp">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/dotted_line"
+            android:backgroundTint="@color/resilience_dash_color" />
+
+        <TextView
+            android:id="@+id/resilienceValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/oval"
+            android:backgroundTint="@color/resilience_selected_color"
+            android:gravity="center"
+            android:paddingHorizontal="4dp"
+            android:paddingVertical="2dp"
+            android:text="+25%"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 </merge>

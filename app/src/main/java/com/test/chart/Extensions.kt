@@ -6,6 +6,7 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.DimenRes
+import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -15,15 +16,19 @@ fun generateId(): String = UUID.randomUUID().toString()
 fun pxToDpInt(px: Float): Int = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, px, Resources.getSystem().displayMetrics).toInt()
 fun pxToDp(px: Float): Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, px, Resources.getSystem().displayMetrics)
 
+val RecyclerView.ViewHolder.context: Context
+    get() = this.itemView.context
+
 val ViewGroup.inflater: LayoutInflater
     get() = LayoutInflater.from(this.context)
 
 fun Int.dp() = (this * Resources.getSystem().displayMetrics.density).toInt()
+fun Int.px() = (this * Resources.getSystem().getDimension(this)).toInt()
 fun Int.sp() = (this * Resources.getSystem().displayMetrics.scaledDensity)
 
 fun Date.byPattern(
     pattern: String,
-    locale: Locale = Locale.getDefault()
+    locale: Locale = Locale.US
 ): String {
     val formattedDate: String
 

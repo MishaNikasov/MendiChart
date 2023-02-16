@@ -2,10 +2,30 @@
 <resources>
     <dimen name="day_chart_item_width">40dp</dimen>
     <dimen name="label_text_size">12sp</dimen>
+    <dimen name="label_top_margin">2dp</dimen>
+    <dimen name="label_start_margin">16dp</dimen>
     <dimen name="chart_item_max_height">70dp</dimen>
-    <dimen name="header_cell_height">30dp</dimen>
-    <dimen name="footer_cell_height">30dp</dimen>
+    <dimen name="header_cell_height">20dp</dimen>
+    <dimen name="footer_cell_height">20dp</dimen>
     <dimen name="item_cell_height">100dp</dimen>
     <dimen name="stroke_sickness">0.7dp</dimen>
+    <dimen name="selected_border_radius">5dp</dimen>
+
+    <dimen name="dot_line_alpha">0.7</dimen>
+
     <color name="cell_stroke_color">#BCBCBC</color>
+    <color name="date_label_text_color">#646B74</color>
+    
+    <color name="neural_activity_unselected_color">#FFB5B7</color>
+    <color name="control_unselected_color">#C5E397</color>
+    <color name="resilience_unselected_color">#FFE398</color>
+
+    <color name="neural_activity_selected_color">#FF595E</color>
+    <color name="control_selected_color">#8AC926</color>
+    <color name="resilience_selected_color">#FFCA3A</color>
+
+    <color name="neural_activity_dash_color">#80BE0F14</color>
+    <color name="control_dash_color">#80497603</color>
+    <color name="resilience_dash_color">#80A47800</color>
+
 </resources>

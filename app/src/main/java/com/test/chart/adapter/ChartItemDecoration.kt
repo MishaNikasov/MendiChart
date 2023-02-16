@@ -12,21 +12,22 @@ import com.test.chart.px
 import kotlin.math.roundToInt
 
 private const val DASH_GAP = 7f
-private const val STROKE_COLOR = R.color.cell_stroke_color
 
 class ChartItemDecoration(private val context: Context) : ItemDecoration() {
 
     private val mBounds = Rect()
+
     private val paint: Paint
         get() = Paint().apply {
-            color = ContextCompat.getColor(context, STROKE_COLOR)
+            color = ContextCompat.getColor(context, R.color.cell_stroke_color)
             isAntiAlias = true
             pathEffect = DashPathEffect(floatArrayOf(DASH_GAP, DASH_GAP, DASH_GAP, DASH_GAP), 0f)
             style = Paint.Style.STROKE
         }
+
     private val textPaint: Paint
         get() = Paint().apply {
-            color = (Color.BLACK)
+            color = ContextCompat.getColor(context, R.color.date_label_text_color)
             isAntiAlias = true
             style = Paint.Style.FILL
             textSize = context.px(R.dimen.label_text_size)
@@ -52,16 +53,16 @@ class ChartItemDecoration(private val context: Context) : ItemDecoration() {
         for (index in 0 until childCount) {
             val child = parent.getChildAt(index)
             val position = parent.getChildLayoutPosition(child)
-            val item = (parent.adapter as? ChartAdapter)?.getItem(index)
+            val chartItemWrapper = (parent.adapter as? ChartAdapter)?.getItem(index)
             parent.layoutManager!!.getDecoratedBoundsWithMargins(child, mBounds)
             val right = mBounds.right + child.translationX.roundToInt()
             val left: Int = right
-            when (item) {
+            when (val item = chartItemWrapper?.item) {
                 is ChartItem.DayItem -> {
                     val dateText = item.date.byPattern("EEE")
                     val textWidth = textPaint.measureText(dateText)
                     val textStartPos = left.toFloat() - (context.px(R.dimen.day_chart_item_width) / 2) - (textWidth / 2)
-                    val textTopPosition = top.toFloat() + (context.px(R.dimen.header_cell_height) / 2) + (context.px(R.dimen.label_text_size) / 3)
+                    val textTopPosition = top.toFloat() + context.px(R.dimen.header_cell_height) + (context.px(R.dimen.header_cell_height) / 2) + (context.px(R.dimen.label_text_size) / 3)
                     canvas.drawText(dateText, textStartPos, textTopPosition, textPaint)
                     if (position != 0)
                         canvas.drawLine(left.toFloat(), top.toFloat(), right.toFloat(), bottom.toFloat(), paint)
