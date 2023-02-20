@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.annotation.DimenRes
 import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
+import java.time.temporal.TemporalAccessor
 import java.util.*
 
 fun dpToPx(dp: Float): Float = (dp * Resources.getSystem().displayMetrics.density)
@@ -26,18 +28,7 @@ fun Int.dp() = (this * Resources.getSystem().displayMetrics.density).toInt()
 fun Int.px() = (this * Resources.getSystem().getDimension(this)).toInt()
 fun Int.sp() = (this * Resources.getSystem().displayMetrics.scaledDensity)
 
-fun Date.byPattern(
-    pattern: String,
-    locale: Locale = Locale.US
-): String {
-    val formattedDate: String
-
-    val simpleDateFormat = SimpleDateFormat(pattern, locale)
-    formattedDate = simpleDateFormat.format(this)
-
-    return formattedDate
-}
-
+fun TemporalAccessor.byPattern(pattern: String): String = DateTimeFormatter.ofPattern(pattern, Locale.US).format(this)
 
 fun Context.px(@DimenRes dimen: Int): Float = resources.getDimension(dimen)
 

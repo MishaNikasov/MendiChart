@@ -13,6 +13,7 @@
         android:descendantFocusability="blocksDescendants"
         android:clipToPadding="false"
         android:paddingEnd="80dp"
+        android:paddingStart="20dp"
         tools:listitem="@layout/item_chart" />
 
     <TextView

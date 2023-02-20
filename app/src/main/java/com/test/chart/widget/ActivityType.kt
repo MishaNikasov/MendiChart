@@ -1,7 +1,8 @@
-package com.test.chart
+package com.test.chart.widget
 
 import android.content.Context
 import androidx.core.content.ContextCompat
+import com.test.chart.R
 
 enum class ActivityType {
     NeuralActivity,

@@ -1,14 +1,10 @@
-package com.test.chart
+package com.test.chart.widget
 
 import android.content.Context
-import android.content.res.Resources
-import android.util.TypedValue
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.annotation.DimenRes
-import com.test.chart.ActivityType.*
-import java.text.SimpleDateFormat
-import java.util.*
+import com.test.chart.R
+import com.test.chart.dp
+import com.test.chart.dpToPxInt
+import com.test.chart.widget.ActivityType.*
 
 data class ChartUtils(val context: Context, private val list: List<ChartItem>) {
 

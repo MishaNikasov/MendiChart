@@ -1,4 +1,4 @@
-package com.test.chart.adapter.holder
+package com.test.chart.widget.adapter.holder
 
 import android.view.ViewGroup
 import com.test.chart.*

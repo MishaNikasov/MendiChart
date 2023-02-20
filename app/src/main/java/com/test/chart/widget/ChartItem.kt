@@ -1,10 +1,10 @@
-package com.test.chart
+package com.test.chart.widget
 
-import java.util.*
+import java.time.LocalDate
 
 sealed class ChartItem(
     open val id: String,
-    open val date: Date,
+    open val date: LocalDate,
     open val neuralActivity: Float,
     open val control: Float,
     open val resilience: Float
@@ -12,7 +12,7 @@ sealed class ChartItem(
 
     data class DayItem(
         override val id: String,
-        override val date: Date,
+        override val date: LocalDate,
         override val neuralActivity: Float,
         override val control: Float,
         override val resilience: Float
@@ -20,7 +20,7 @@ sealed class ChartItem(
 
     data class MonthItem(
         override val id: String,
-        override val date: Date,
+        override val date: LocalDate,
         override val neuralActivity: Float,
         override val control: Float,
         override val resilience: Float
@@ -28,7 +28,7 @@ sealed class ChartItem(
 
     data class SixMonthItem(
         override val id: String,
-        override val date: Date,
+        override val date: LocalDate,
         override val neuralActivity: Float,
         override val control: Float,
         override val resilience: Float

@@ -1,17 +1,17 @@
-package com.test.chart.adapter
+package com.test.chart.widget.adapter
 
 import android.content.Context
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.test.chart.ChartItem
-import com.test.chart.ChartUtils
-import com.test.chart.adapter.holder.ChartViewHolder
-import com.test.chart.adapter.holder.DayViewHolder
-import com.test.chart.adapter.holder.MonthViewHolder
-import com.test.chart.adapter.holder.SixMonthViewHolder
-import com.test.chart.adapter.model.ChartItemWrapper
+import com.test.chart.widget.ChartItem
+import com.test.chart.widget.ChartUtils
+import com.test.chart.widget.adapter.holder.ChartViewHolder
+import com.test.chart.widget.adapter.holder.DayViewHolder
+import com.test.chart.widget.adapter.holder.MonthViewHolder
+import com.test.chart.widget.adapter.holder.SixMonthViewHolder
+import com.test.chart.widget.adapter.model.ChartItemWrapper
 
 class ChartAdapter(private val context: Context) : RecyclerView.Adapter<ChartViewHolder>() {
 

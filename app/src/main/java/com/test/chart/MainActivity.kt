@@ -3,10 +3,14 @@ package com.test.chart
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.test.chart.adapter.model.ChartItemWrapper
-import com.test.chart.adapter.model.FocusState
+import com.test.chart.data.LocalDateUtils
+import com.test.chart.widget.adapter.model.ChartItemWrapper
+import com.test.chart.widget.adapter.model.FocusState
 import com.test.chart.databinding.ActivityMainBinding
+import com.test.chart.widget.ChartItem
+import java.time.Month
 import java.util.*
+import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,15 +40,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupDayChart() {
         val q = mutableListOf<ChartItemWrapper>()
-        repeat(300) {
+        LocalDateUtils.getMonthDayList(Month.APRIL).forEach { day ->
             q.add(
                 ChartItemWrapper(
                     item = ChartItem.DayItem(
                         id = generateId(),
-                        date = Date(),
-                        neuralActivity = kotlin.random.Random.nextInt(2, 20).toFloat(),
-                        control = kotlin.random.Random.nextInt(2, 20).toFloat(),
-                        resilience = kotlin.random.Random.nextInt(2, 20).toFloat()
+                        date = day,
+                        neuralActivity = Random.nextInt(2, 20).toFloat(),
+                        control = Random.nextInt(2, 20).toFloat(),
+                        resilience = Random.nextInt(2, 20).toFloat()
                     ),
                     focusState = FocusState.Preview
                 )
@@ -57,15 +61,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupMonthChart() {
         val q = mutableListOf<ChartItemWrapper>()
-        repeat(300) {
+        LocalDateUtils.getMonthDayList(Month.APRIL).forEach { day ->
             q.add(
                 ChartItemWrapper(
                     item = ChartItem.MonthItem(
                         id = generateId(),
-                        date = Date(),
-                        neuralActivity = kotlin.random.Random.nextInt(2, 20).toFloat(),
-                        control = kotlin.random.Random.nextInt(2, 20).toFloat(),
-                        resilience = kotlin.random.Random.nextInt(2, 20).toFloat()
+                        date = day,
+                        neuralActivity = Random.nextInt(2, 20).toFloat(),
+                        control = Random.nextInt(2, 20).toFloat(),
+                        resilience = Random.nextInt(2, 20).toFloat()
                     ),
                     focusState = FocusState.Preview
                 )

@@ -1,4 +1,4 @@
-package com.test.chart.adapter.holder
+package com.test.chart.widget.adapter.holder
 
 import android.content.res.ColorStateList
 import android.view.Gravity
@@ -7,9 +7,12 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.test.chart.*
-import com.test.chart.adapter.model.ChartItemWrapper
-import com.test.chart.adapter.model.FocusState
+import com.test.chart.widget.adapter.model.ChartItemWrapper
+import com.test.chart.widget.adapter.model.FocusState
 import com.test.chart.databinding.ItemChartBinding
+import com.test.chart.widget.ActivityType
+import com.test.chart.widget.ChartItem
+import com.test.chart.widget.ChartUtils
 
 abstract class ChartViewHolder(private val binding: ItemChartBinding) : RecyclerView.ViewHolder(binding.root) {
 

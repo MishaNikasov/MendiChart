@@ -1,6 +1,6 @@
-package com.test.chart.adapter.model
+package com.test.chart.widget.adapter.model
 
-import com.test.chart.ChartItem
+import com.test.chart.widget.ChartItem
 
 data class ChartItemWrapper(
     val item: ChartItem,

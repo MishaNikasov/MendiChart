@@ -5,12 +5,11 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.test.chart.ChartItem
 import com.test.chart.R
-import com.test.chart.adapter.ChartAdapter
-import com.test.chart.adapter.ChartItemDecoration
-import com.test.chart.adapter.model.ChartItemWrapper
-import com.test.chart.adapter.model.FocusState
+import com.test.chart.widget.adapter.ChartAdapter
+import com.test.chart.widget.adapter.ChartItemDecoration
+import com.test.chart.widget.adapter.model.ChartItemWrapper
+import com.test.chart.widget.adapter.model.FocusState
 import com.test.chart.databinding.WidgetDayChartBinding
 import com.test.chart.dp
 import com.test.chart.px
@@ -82,7 +81,7 @@ class ChartWidget @JvmOverloads constructor(
             adapter = chartAdapter
             layoutManager = LinearLayoutManager(context).apply {
                 orientation = LinearLayoutManager.HORIZONTAL
-                reverseLayout = true
+                stackFromEnd = true
                 itemAnimator = null
             }
             addItemDecoration(ChartItemDecoration(context))
