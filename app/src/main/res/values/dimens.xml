@@ -19,9 +19,12 @@
     <dimen name="footer_cell_height">20dp</dimen>
     <dimen name="item_cell_height">100dp</dimen>
     <dimen name="stroke_sickness">0.7dp</dimen>
+    <dimen name="column_border_radius">2dp</dimen>
     <dimen name="selected_border_radius">5dp</dimen>
 
     <dimen name="dot_line_alpha">0.7</dimen>
+
+    <color name="chart_background_color">#F3F2EE</color>
 
     <color name="cell_stroke_color">#BCBCBC</color>
     <color name="date_label_text_color">#646B74</color>
@@ -30,12 +33,12 @@
     <color name="control_unselected_color">#C5E397</color>
     <color name="resilience_unselected_color">#FFE398</color>
 
-    <color name="neural_activity_selected_color">#FF595E</color>
-    <color name="control_selected_color">#8AC926</color>
-    <color name="resilience_selected_color">#FFCA3A</color>
+    <color name="neural_activity_selected_color">#6D4DA3</color>
+    <color name="control_selected_color">#B460AB</color>
+    <color name="resilience_selected_color">#E37B5A</color>
 
-    <color name="neural_activity_dash_color">#80BE0F14</color>
-    <color name="control_dash_color">#80497603</color>
-    <color name="resilience_dash_color">#80A47800</color>
+    <color name="neural_activity_dash_color">#806D4DA3</color>
+    <color name="control_dash_color">#80B460AB</color>
+    <color name="resilience_dash_color">#80E37B5A</color>
 
 </resources>

@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.test.chart.data.LocalDateUtils
+import com.test.chart.data.LocalDateUtils.getCurrentMonthWrapper
+import com.test.chart.data.MonthWrapper
 import com.test.chart.widget.adapter.model.ChartItemWrapper
 import com.test.chart.widget.adapter.model.FocusState
 import com.test.chart.databinding.ActivityMainBinding
@@ -40,7 +42,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupDayChart() {
         val q = mutableListOf<ChartItemWrapper>()
-        LocalDateUtils.getMonthDayList(Month.APRIL).forEach { day ->
+        LocalDateUtils.getMonthDayList(
+            MonthWrapper(Month.FEBRUARY)
+        ).forEach { day ->
             q.add(
                 ChartItemWrapper(
                     item = ChartItem.DayItem(
@@ -61,7 +65,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupMonthChart() {
         val q = mutableListOf<ChartItemWrapper>()
-        LocalDateUtils.getMonthDayList(Month.APRIL).forEach { day ->
+        LocalDateUtils.getMonthDayList(
+            MonthWrapper(Month.JANUARY),
+            getCurrentMonthWrapper()
+        ).forEach { day ->
             q.add(
                 ChartItemWrapper(
                     item = ChartItem.MonthItem(

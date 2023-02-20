@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/parentLayout"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parentLayout"
     android:layout_width="@dimen/day_chart_cell_width"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -24,6 +24,8 @@
         android:background="@drawable/top_border_bg"
         android:elevation="1dp"
         android:gravity="center"
+        android:lines="1"
+        android:maxLines="1"
         android:textColor="@color/white"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/neuralLayout"
@@ -49,8 +51,7 @@
             android:layout_width="26dp"
             android:layout_height="60dp"
             android:layout_gravity="center|bottom"
-            android:background="@drawable/column"
-            android:backgroundTint="#FFB5B7" />
+            tools:background="@drawable/column_neural_activity_selected" />
 
         <View
             android:layout_width="match_parent"
@@ -71,8 +72,7 @@
             android:layout_width="26dp"
             android:layout_height="60dp"
             android:layout_gravity="center|bottom"
-            android:background="@drawable/column"
-            android:backgroundTint="#C5E397" />
+            android:background="@drawable/column_control_selected" />
 
         <View
             android:layout_width="match_parent"
@@ -93,8 +93,7 @@
             android:layout_width="26dp"
             android:layout_height="60dp"
             android:layout_gravity="center|bottom"
-            android:background="@drawable/column"
-            android:backgroundTint="#FFE398" />
+            tools:background="@drawable/column_resilience_selected" />
 
         <View
             android:layout_width="match_parent"
@@ -110,6 +109,8 @@
         android:background="@drawable/bottom_border_bg"
         android:elevation="1dp"
         android:gravity="center"
+        android:lines="1"
+        android:maxLines="1"
         android:textColor="@color/white"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@id/footerLayout"

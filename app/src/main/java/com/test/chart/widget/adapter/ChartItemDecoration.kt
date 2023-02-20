@@ -12,6 +12,7 @@ import com.test.chart.R
 import com.test.chart.byPattern
 import com.test.chart.px
 import com.test.chart.widget.ChartItem
+import com.test.chart.widget.adapter.model.FocusState
 import kotlin.math.roundToInt
 
 private const val DASH_GAP = 7f
@@ -87,32 +88,33 @@ class ChartItemDecoration(private val context: Context) : ItemDecoration() {
                     )
                 }
                 is ChartItem.MonthItem -> {
-                    when {
-                        monthHighlightDay.contains(item.date.dayOfMonth) -> {
-                            val dateText = item.date.byPattern("d")
-                            val textStartPos = left.toFloat() + context.px(R.dimen.date_label_start_margin)
-                            val textTopPosition = top.toFloat() + context.px(R.dimen.header_cell_height) + (context.px(R.dimen.header_cell_height) / 2) + (context.px(R.dimen.label_text_size) / 3)
-                            val textBottomPosition = bottom.toFloat() - context.px(R.dimen.footer_cell_height) - (context.px(R.dimen.label_text_size) / 2)
-                            if (item.date.dayOfMonth == 1) {
-                                val monthText = item.date.byPattern("MMM")
-                                val topPosition = textTopPosition - context.px(R.dimen.header_cell_height)
-                                val bottomPosition = textBottomPosition + context.px(R.dimen.header_cell_height)
-                                canvas.drawText(monthText, textStartPos, topPosition, textPaint)
-                                canvas.drawText(monthText, textStartPos, bottomPosition, textPaint)
-                            }
+                    if (monthHighlightDay.contains(item.date.dayOfMonth)) {
+                        val dateText = item.date.byPattern("d")
+                        val textStartPos = left.toFloat() + context.px(R.dimen.date_label_start_margin)
+                        val textTopPosition =
+                            top.toFloat() + context.px(R.dimen.header_cell_height) + (context.px(R.dimen.header_cell_height) / 2) + (context.px(R.dimen.label_text_size) / 3)
+                        val textBottomPosition = bottom.toFloat() - context.px(R.dimen.footer_cell_height) - (context.px(R.dimen.label_text_size) / 2)
+                        if (item.date.dayOfMonth == 1) {
+                            val monthText = item.date.byPattern("MMM")
+                            val topPosition = textTopPosition - context.px(R.dimen.header_cell_height)
+                            val bottomPosition = textBottomPosition + context.px(R.dimen.header_cell_height)
+                            canvas.drawText(monthText, textStartPos, topPosition, textPaint)
+                            canvas.drawText(monthText, textStartPos, bottomPosition, textPaint)
+                        }
+                        if (chartItemWrapper.focusState != FocusState.InFocus) {
                             canvas.drawText(dateText, textStartPos, textTopPosition, textPaint)
                             canvas.drawText(dateText, textStartPos, textBottomPosition, textPaint)
-                            if (item.date.dayOfMonth == 1) {
-                                canvas.drawLine(left.toFloat(), top.toFloat(), left.toFloat(), bottom.toFloat(), linePaint)
-                            } else {
-                                canvas.drawLine(
-                                    left.toFloat(),
-                                    top.toFloat() + context.px(R.dimen.header_cell_height),
-                                    left.toFloat(),
-                                    bottom.toFloat() - context.px(R.dimen.footer_cell_height),
-                                    dashLinePaint
-                                )
-                            }
+                        }
+                        if (item.date.dayOfMonth == 1) {
+                            canvas.drawLine(left.toFloat(), top.toFloat(), left.toFloat(), bottom.toFloat(), linePaint)
+                        } else {
+                            canvas.drawLine(
+                                left.toFloat(),
+                                top.toFloat() + context.px(R.dimen.header_cell_height),
+                                left.toFloat(),
+                                bottom.toFloat() - context.px(R.dimen.footer_cell_height),
+                                dashLinePaint
+                            )
                         }
                     }
                 }

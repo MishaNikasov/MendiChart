@@ -24,4 +24,7 @@ class MonthViewHolder(private val binding: ItemChartBinding): ChartViewHolder(bi
     override val datePattern: String
         get() = "d"
 
+    override val dateTextSize: Float
+        get() = 10f
+
 }

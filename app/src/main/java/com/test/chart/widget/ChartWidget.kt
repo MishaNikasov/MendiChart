@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.test.chart.R
 import com.test.chart.widget.adapter.ChartAdapter
@@ -34,6 +35,7 @@ class ChartWidget @JvmOverloads constructor(
     var selectListener: (ChartItem) -> Unit = { }
 
     init {
+        setBackgroundColor(ContextCompat.getColor(context, R.color.chart_background_color))
         setupRecycler()
         setupLabels()
     }

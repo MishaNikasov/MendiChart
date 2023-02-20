@@ -1,6 +1,5 @@
 package com.test.chart.widget.adapter.holder
 
-import android.content.res.ColorStateList
 import android.view.Gravity
 import android.widget.FrameLayout
 import androidx.core.view.isInvisible
@@ -19,6 +18,8 @@ abstract class ChartViewHolder(private val binding: ItemChartBinding) : Recycler
     abstract fun calculateCellWidth()
 
     abstract val datePattern: String
+
+    abstract val dateTextSize: Float
 
     fun bind(
         chartUtils: ChartUtils,
@@ -47,25 +48,31 @@ abstract class ChartViewHolder(private val binding: ItemChartBinding) : Recycler
                 Gravity.BOTTOM or Gravity.CENTER
             )
             val dateText = item.date.byPattern(datePattern)
-            bottomDate.text = dateText
-            topDate.text = dateText
+            with(topDate) {
+                text = dateText
+                textSize = dateTextSize
+            }
+            with(bottomDate) {
+                text = dateText
+                textSize = dateTextSize
+            }
             when (wrapper.focusState) {
                 FocusState.Preview -> {
-                    neuralActivity.backgroundTintList = ColorStateList.valueOf(ActivityType.NeuralActivity.selectedColor(context))
-                    control.backgroundTintList = ColorStateList.valueOf(ActivityType.Control.selectedColor(context))
-                    resilience.backgroundTintList = ColorStateList.valueOf(ActivityType.Resilience.selectedColor(context))
+                    neuralActivity.background = ActivityType.NeuralActivity.selectedBg(context)
+                    control.background = ActivityType.Control.selectedBg(context)
+                    resilience.background = ActivityType.Resilience.selectedBg(context)
                     selectedOverlay.isInvisible = true
                 }
                 FocusState.InFocus -> {
-                    neuralActivity.backgroundTintList = ColorStateList.valueOf(ActivityType.NeuralActivity.selectedColor(context))
-                    control.backgroundTintList = ColorStateList.valueOf(ActivityType.Control.selectedColor(context))
-                    resilience.backgroundTintList = ColorStateList.valueOf(ActivityType.Resilience.selectedColor(context))
+                    neuralActivity.background = ActivityType.NeuralActivity.selectedBg(context)
+                    control.background = ActivityType.Control.selectedBg(context)
+                    resilience.background = ActivityType.Resilience.selectedBg(context)
                     selectedOverlay.isVisible = true
                 }
                 FocusState.OutOfFocus -> {
-                    neuralActivity.backgroundTintList = ColorStateList.valueOf(ActivityType.NeuralActivity.unselectedColor(context))
-                    control.backgroundTintList = ColorStateList.valueOf(ActivityType.Control.unselectedColor(context))
-                    resilience.backgroundTintList = ColorStateList.valueOf(ActivityType.Resilience.unselectedColor(context))
+                    neuralActivity.background = ActivityType.NeuralActivity.unselectedBg(context)
+                    control.background = ActivityType.Control.unselectedBg(context)
+                    resilience.background = ActivityType.Resilience.unselectedBg(context)
                     selectedOverlay.isInvisible = true
                 }
             }

@@ -3,17 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    tools:background="@color/chart_background_color"
     tools:parentTag="android.widget.FrameLayout">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:itemCount="1"
-        android:descendantFocusability="blocksDescendants"
         android:clipToPadding="false"
-        android:paddingEnd="80dp"
+        android:descendantFocusability="blocksDescendants"
         android:paddingStart="20dp"
+        android:paddingEnd="80dp"
+        tools:itemCount="1"
         tools:listitem="@layout/item_chart" />
 
     <TextView
@@ -22,11 +23,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:background="@drawable/oval"
+        android:backgroundTint="@color/chart_background_color"
         android:gravity="center"
         android:padding="2dp"
         android:paddingHorizontal="1dp"
         android:text="@string/neural_activity"
-        android:textColor="#FF595E"
+        android:textColor="@color/neural_activity_selected_color"
         android:textSize="12sp"
         android:textStyle="bold"
         tools:layout_marginTop="42dp" />
@@ -37,11 +39,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:background="@drawable/oval"
+        android:backgroundTint="@color/chart_background_color"
         android:gravity="center"
         android:padding="2dp"
         android:paddingHorizontal="1dp"
         android:text="@string/control"
-        android:textColor="#8AC926"
+        android:textColor="@color/control_selected_color"
         android:textSize="12sp"
         android:textStyle="bold"
         tools:layout_marginTop="142dp" />
@@ -52,11 +55,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:background="@drawable/oval"
+        android:backgroundTint="@color/chart_background_color"
         android:gravity="center"
         android:padding="2dp"
         android:paddingHorizontal="1dp"
         android:text="@string/resilience"
-        android:textColor="#FFCA3A"
+        android:textColor="@color/resilience_selected_color"
         android:textSize="12sp"
         android:textStyle="bold"
         tools:layout_marginTop="242dp" />
@@ -119,7 +123,7 @@
             android:gravity="center"
             android:paddingHorizontal="4dp"
             android:paddingVertical="2dp"
-            android:text="+25%"
+            android:text="20s"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -150,7 +154,7 @@
             android:gravity="center"
             android:paddingHorizontal="4dp"
             android:paddingVertical="2dp"
-            android:text="+25%"
+            android:text="2456p"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:textStyle="bold" />

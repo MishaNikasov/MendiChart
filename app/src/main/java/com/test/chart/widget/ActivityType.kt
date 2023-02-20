@@ -1,6 +1,7 @@
 package com.test.chart.widget
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
 import com.test.chart.R
 
@@ -9,19 +10,19 @@ enum class ActivityType {
     Control,
     Resilience;
 
-    val selectedColor: (Context) -> Int = { context ->
+    val selectedBg: (Context) -> Drawable = { context ->
         when (this) {
-            NeuralActivity -> ContextCompat.getColor(context, R.color.neural_activity_selected_color)
-            Control -> ContextCompat.getColor(context, R.color.control_selected_color)
-            Resilience -> ContextCompat.getColor(context, R.color.resilience_selected_color)
+            NeuralActivity -> ContextCompat.getDrawable(context, R.drawable.column_neural_activity_selected)!!
+            Control -> ContextCompat.getDrawable(context, R.drawable.column_control_selected)!!
+            Resilience -> ContextCompat.getDrawable(context, R.drawable.column_resilience_selected)!!
         }
     }
 
-    val unselectedColor: (Context) -> Int = { context ->
+    val unselectedBg: (Context) -> Drawable = { context ->
         when (this) {
-            NeuralActivity -> ContextCompat.getColor(context, R.color.neural_activity_unselected_color)
-            Control -> ContextCompat.getColor(context, R.color.control_unselected_color)
-            Resilience -> ContextCompat.getColor(context, R.color.resilience_unselected_color)
+            NeuralActivity -> ContextCompat.getDrawable(context, R.drawable.column_neural_activity_unselected)!!
+            Control -> ContextCompat.getDrawable(context, R.drawable.column_control_unselected)!!
+            Resilience -> ContextCompat.getDrawable(context, R.drawable.column_resilience_unselected)!!
         }
     }
 

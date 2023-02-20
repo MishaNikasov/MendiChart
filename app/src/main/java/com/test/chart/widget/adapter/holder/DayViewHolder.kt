@@ -24,4 +24,7 @@ class DayViewHolder(private val binding: ItemChartBinding): ChartViewHolder(bind
     override val datePattern: String
         get() = "EEE"
 
+    override val dateTextSize: Float
+        get() = 12f
+
 }
