@@ -24,8 +24,6 @@ class ChartAdapter(private val context: Context) : RecyclerView.Adapter<ChartVie
 
     lateinit var chartUtils: ChartUtils
 
-    var selectListener: (ChartItem) -> Unit = { }
-
     val list: List<ChartItemWrapper>
         get() = differ.currentList
 
@@ -59,9 +57,9 @@ class ChartAdapter(private val context: Context) : RecyclerView.Adapter<ChartVie
     override fun onBindViewHolder(holder: ChartViewHolder, position: Int) {
         val item = list[position]
         when (holder) {
-            is DayViewHolder -> holder.bind(chartUtils, item, selectListener)
-            is MonthViewHolder -> holder.bind(chartUtils, item, selectListener)
-            is SixMonthViewHolder -> holder.bind(chartUtils, item, selectListener)
+            is DayViewHolder -> holder.bind(chartUtils, item)
+            is MonthViewHolder -> holder.bind(chartUtils, item)
+            is SixMonthViewHolder -> holder.bind(chartUtils, item)
         }
     }
 }

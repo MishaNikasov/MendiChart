@@ -58,6 +58,7 @@ class MainActivity : AppCompatActivity() {
                 )
             )
         }
+        //.subList(0,4)
         dayList = q
         binding.dayChart.chartData = dayList
     }

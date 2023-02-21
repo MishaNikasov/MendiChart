@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:overScrollMode="never"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -19,9 +20,10 @@
             android:layout_height="match_parent" />
 
         <com.test.chart.widget.ChartWidget
+            android:visibility="gone"
             android:id="@+id/sixMonthChart"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
     </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+</FrameLayout>

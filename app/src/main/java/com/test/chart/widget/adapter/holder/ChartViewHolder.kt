@@ -5,13 +5,13 @@ import android.widget.FrameLayout
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.test.chart.*
-import com.test.chart.widget.adapter.model.ChartItemWrapper
-import com.test.chart.widget.adapter.model.FocusState
+import com.test.chart.byPattern
+import com.test.chart.context
 import com.test.chart.databinding.ItemChartBinding
 import com.test.chart.widget.ActivityType
-import com.test.chart.widget.ChartItem
 import com.test.chart.widget.ChartUtils
+import com.test.chart.widget.adapter.model.ChartItemWrapper
+import com.test.chart.widget.adapter.model.FocusState
 
 abstract class ChartViewHolder(private val binding: ItemChartBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -23,8 +23,7 @@ abstract class ChartViewHolder(private val binding: ItemChartBinding) : Recycler
 
     fun bind(
         chartUtils: ChartUtils,
-        wrapper: ChartItemWrapper,
-        selectListener: (ChartItem) -> Unit
+        wrapper: ChartItemWrapper
     ) {
         with(binding) {
             calculateCellWidth()
@@ -76,7 +75,6 @@ abstract class ChartViewHolder(private val binding: ItemChartBinding) : Recycler
                     selectedOverlay.isInvisible = true
                 }
             }
-            root.setOnClickListener { selectListener(item) }
         }
     }
 
