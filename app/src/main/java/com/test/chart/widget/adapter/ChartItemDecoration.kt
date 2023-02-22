@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.test.chart.R
 import com.test.chart.byPattern
 import com.test.chart.px
-import com.test.chart.widget.ChartItem
+import com.test.chart.widget.adapter.model.ChartItem
 import com.test.chart.widget.adapter.model.FocusState
 import kotlin.math.roundToInt
 

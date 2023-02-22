@@ -19,23 +19,18 @@ import com.test.chart.px
 import com.test.chart.widget.adapter.ChartAdapter
 import com.test.chart.widget.adapter.ChartItemDecoration
 import com.test.chart.widget.adapter.ChartSnapHelper
+import com.test.chart.widget.adapter.model.ChartItem
 import com.test.chart.widget.adapter.model.ChartItemWrapper
 import com.test.chart.widget.adapter.model.FocusState
 import kotlin.math.roundToInt
-
-interface ChartCallback {
-    fun selectChartItem(item: ChartItem)
-    fun selectedChartItemList(listItem: List<ChartItem>)
-    fun clearSelection()
-}
-
-private const val TAG = "ChartWidget"
 
 class ChartWidget @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyle: Int = 0
 ) : FrameLayout(context, attrs, defStyle) {
+
+    private val TAG = "ChartWidget"
 
     private val binding = WidgetDayChartBinding.inflate(LayoutInflater.from(context), this)
 
@@ -66,7 +61,7 @@ class ChartWidget @JvmOverloads constructor(
     var chartData: List<ChartItemWrapper> = emptyList()
         set(value) {
             field = value
-            refresh()
+            chartAdapter.submitList(chartData)
         }
 
     private var chartCallback: ChartCallback? = null
@@ -115,6 +110,7 @@ class ChartWidget @JvmOverloads constructor(
             else
                 ChartItemWrapper(wrapper.item, FocusState.OutOfFocus)
         }
+        chartCallback?.selectChartItem(chartItem)
     }
 
     private fun clearFocusStates() {
@@ -143,21 +139,11 @@ class ChartWidget @JvmOverloads constructor(
         }
     }
 
-    private fun refresh() {
-        chartAdapter.submitList(chartData)
-    }
-
-    private fun handleSelection(wrapper: ChartItemWrapper) {
-        handleFocusState(wrapper.item)
-        chartCallback?.selectChartItem(wrapper.item)
-    }
-
     private fun getItemAtPosition(coordinates: ItemCoordinates): ChartItemWrapper? {
         with(binding.recycler) {
             findChildViewUnder(coordinates.x, coordinates.y)?.let {
                 return chartAdapter.list[getChildAdapterPosition(it)]
-            }
-            return null
+            } ?: return null
         }
     }
 
@@ -166,9 +152,9 @@ class ChartWidget @JvmOverloads constructor(
         when (event?.action) {
             MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE -> {
                 if (boundaries.contains(left + event.x.toInt(), top + event.y.toInt())) {
-                    when (val item = getItemAtPosition(ItemCoordinates(event.x, event.y))) {
+                    when (val wrapper = getItemAtPosition(ItemCoordinates(event.x, event.y))) {
                         null -> clearFocusStates()
-                        else -> handleSelection(item)
+                        else -> handleFocusState(wrapper.item)
                     }
                 } else { clearFocusStates() }
             }

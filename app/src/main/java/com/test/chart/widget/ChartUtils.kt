@@ -5,6 +5,7 @@ import com.test.chart.R
 import com.test.chart.dp
 import com.test.chart.dpToPxInt
 import com.test.chart.widget.ActivityType.*
+import com.test.chart.widget.adapter.model.ChartItem
 
 data class ChartUtils(val context: Context, private val list: List<ChartItem>) {
 

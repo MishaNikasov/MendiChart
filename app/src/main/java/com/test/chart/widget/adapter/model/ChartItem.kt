@@ -1,4 +1,4 @@
-package com.test.chart.widget
+package com.test.chart.widget.adapter.model
 
 import java.time.LocalDate
 

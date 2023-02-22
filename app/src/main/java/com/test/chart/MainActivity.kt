@@ -10,7 +10,7 @@ import com.test.chart.widget.adapter.model.ChartItemWrapper
 import com.test.chart.widget.adapter.model.FocusState
 import com.test.chart.databinding.ActivityMainBinding
 import com.test.chart.widget.ChartCallback
-import com.test.chart.widget.ChartItem
+import com.test.chart.widget.adapter.model.ChartItem
 import java.time.Month
 import kotlin.random.Random
 
@@ -61,6 +61,7 @@ class MainActivity : AppCompatActivity(), ChartCallback {
         //.subList(0,4)
         dayList = q
         binding.dayChart.chartData = dayList
+        binding.dayChart.setChartCallback(this)
     }
 
 

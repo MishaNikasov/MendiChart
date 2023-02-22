@@ -5,17 +5,16 @@
     android:background="@color/chart_background_color"
     android:overScrollMode="never">
 
-    <com.test.chart.widget.ChartWidget
-        android:id="@+id/dayChart"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:orientation="vertical">
+
+        <com.test.chart.widget.ChartWidget
+            android:id="@+id/dayChart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
 
         <com.test.chart.widget.ChartWidget
             android:id="@+id/monthChart"
@@ -25,6 +24,7 @@
         <com.test.chart.widget.ChartWidget
             android:id="@+id/sixMonthChart"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:visibility="gone" />
     </LinearLayout>
 </FrameLayout>

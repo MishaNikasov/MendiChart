@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.test.chart.widget.ChartItem
+import com.test.chart.widget.adapter.model.ChartItem
 import com.test.chart.widget.ChartUtils
 import com.test.chart.widget.adapter.holder.ChartViewHolder
 import com.test.chart.widget.adapter.holder.DayViewHolder
