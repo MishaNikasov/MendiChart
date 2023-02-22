@@ -12,14 +12,11 @@ class SixMonthViewHolder(private val binding: ItemChartBinding): ChartViewHolder
         fun inflate(parent: ViewGroup) = SixMonthViewHolder(ItemChartBinding.inflate(parent.inflater, parent, false))
     }
 
-    override fun calculateCellWidth() {
-        with(binding) {
-            parentLayout.layoutParams = ViewGroup.LayoutParams(context.px(R.dimen.month_chart_cell_width).roundToInt(), ViewGroup.LayoutParams.WRAP_CONTENT)
-            neuralActivity.layoutParams = ViewGroup.LayoutParams(context.px(R.dimen.month_chart_item_width).roundToInt(), ViewGroup.LayoutParams.WRAP_CONTENT)
-            control.layoutParams = ViewGroup.LayoutParams(context.px(R.dimen.month_chart_item_width).roundToInt(), ViewGroup.LayoutParams.WRAP_CONTENT)
-            resilience.layoutParams = ViewGroup.LayoutParams(context.px(R.dimen.month_chart_item_width).roundToInt(), ViewGroup.LayoutParams.WRAP_CONTENT)
-        }
-    }
+    override val cellWidth: Int
+        get() = context.px(R.dimen.six_month_chart_cell_width).roundToInt()
+
+    override val itemWidth: Int
+        get() = context.px(R.dimen.six_month_chart_item_width).roundToInt()
 
     override val datePattern: String
         get() = ""

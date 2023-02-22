@@ -9,12 +9,12 @@ import com.test.chart.data.MonthWrapper
 import com.test.chart.widget.adapter.model.ChartItemWrapper
 import com.test.chart.widget.adapter.model.FocusState
 import com.test.chart.databinding.ActivityMainBinding
+import com.test.chart.widget.ChartCallback
 import com.test.chart.widget.ChartItem
 import java.time.Month
-import java.util.*
 import kotlin.random.Random
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ChartCallback {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -85,9 +85,18 @@ class MainActivity : AppCompatActivity() {
         }
         monthList = q
         binding.monthChart.chartData = monthList
-        binding.monthChart.selectListener = {
-            Log.d("TAG", "$it")
-        }
+        binding.monthChart.setChartCallback(this)
+    }
+
+    override fun selectChartItem(item: ChartItem) {
+        Log.d("TAG", "$item")
+    }
+
+    override fun selectedChartItemList(listItem: List<ChartItem>) {
+        Log.d("TAG", "$listItem")
+    }
+
+    override fun clearSelection() {
     }
 
 }

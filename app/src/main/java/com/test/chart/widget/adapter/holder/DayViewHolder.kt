@@ -12,14 +12,11 @@ class DayViewHolder(private val binding: ItemChartBinding): ChartViewHolder(bind
         fun inflate(parent: ViewGroup) = DayViewHolder(ItemChartBinding.inflate(parent.inflater, parent, false))
     }
 
-    override fun calculateCellWidth() {
-        with(binding) {
-            parentLayout.layoutParams = ViewGroup.LayoutParams(context.px(R.dimen.day_chart_cell_width).roundToInt(), ViewGroup.LayoutParams.WRAP_CONTENT)
-            neuralActivity.layoutParams = ViewGroup.LayoutParams(context.px(R.dimen.day_chart_item_width).roundToInt(), ViewGroup.LayoutParams.WRAP_CONTENT)
-            control.layoutParams = ViewGroup.LayoutParams(context.px(R.dimen.day_chart_item_width).roundToInt(), ViewGroup.LayoutParams.WRAP_CONTENT)
-            resilience.layoutParams = ViewGroup.LayoutParams(context.px(R.dimen.day_chart_item_width).roundToInt(), ViewGroup.LayoutParams.WRAP_CONTENT)
-        }
-    }
+    override val cellWidth: Int
+        get() = context.resources.displayMetrics.widthPixels/7
+
+    override val itemWidth: Int
+        get() = (cellWidth * 0.7).roundToInt()
 
     override val datePattern: String
         get() = "EEE"

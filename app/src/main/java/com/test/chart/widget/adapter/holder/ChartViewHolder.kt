@@ -1,6 +1,7 @@
 package com.test.chart.widget.adapter.holder
 
 import android.view.Gravity
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
@@ -15,11 +16,13 @@ import com.test.chart.widget.adapter.model.FocusState
 
 abstract class ChartViewHolder(private val binding: ItemChartBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    abstract fun calculateCellWidth()
-
     abstract val datePattern: String
 
     abstract val dateTextSize: Float
+
+    abstract val cellWidth: Int
+
+    abstract val itemWidth: Int
 
     fun bind(
         chartUtils: ChartUtils,
@@ -75,6 +78,15 @@ abstract class ChartViewHolder(private val binding: ItemChartBinding) : Recycler
                     selectedOverlay.isInvisible = true
                 }
             }
+        }
+    }
+
+    private fun calculateCellWidth() {
+        with(binding) {
+            parentLayout.layoutParams = ViewGroup.LayoutParams(cellWidth, ViewGroup.LayoutParams.WRAP_CONTENT)
+            neuralActivity.layoutParams = ViewGroup.LayoutParams(itemWidth, ViewGroup.LayoutParams.WRAP_CONTENT)
+            control.layoutParams = ViewGroup.LayoutParams(itemWidth, ViewGroup.LayoutParams.WRAP_CONTENT)
+            resilience.layoutParams = ViewGroup.LayoutParams(itemWidth, ViewGroup.LayoutParams.WRAP_CONTENT)
         }
     }
 
