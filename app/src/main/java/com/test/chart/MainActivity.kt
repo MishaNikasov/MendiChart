@@ -91,13 +91,18 @@ class MainActivity : AppCompatActivity(), ChartCallback {
 
     override fun selectChartItem(item: ChartItem) {
         Log.d("TAG", "$item")
+        val itemText = "${item.date.byPattern("d, MMM")}"
+        binding.item.text = itemText
     }
 
     override fun selectedChartItemList(listItem: List<ChartItem>) {
+        val itemListText = "${listItem[0].date.byPattern("d, MMM")} - ${listItem[listItem.lastIndex].date.byPattern("d, MMM")}"
+        binding.itemList.text = itemListText
         Log.d("TAG", "$listItem")
     }
 
     override fun clearSelection() {
+        binding.item.text = ""
     }
 
 }

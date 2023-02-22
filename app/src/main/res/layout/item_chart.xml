@@ -51,6 +51,7 @@
             android:layout_width="26dp"
             android:layout_height="60dp"
             android:layout_gravity="center|bottom"
+            android:maxHeight="@dimen/chart_item_max_height"
             tools:background="@drawable/column_neural_activity_selected" />
 
         <View
@@ -72,7 +73,8 @@
             android:layout_width="26dp"
             android:layout_height="60dp"
             android:layout_gravity="center|bottom"
-            android:background="@drawable/column_control_selected" />
+            android:background="@drawable/column_control_selected"
+            android:maxHeight="@dimen/chart_item_max_height" />
 
         <View
             android:layout_width="match_parent"
@@ -93,6 +95,7 @@
             android:layout_width="26dp"
             android:layout_height="60dp"
             android:layout_gravity="center|bottom"
+            android:maxHeight="@dimen/chart_item_max_height"
             tools:background="@drawable/column_resilience_selected" />
 
         <View

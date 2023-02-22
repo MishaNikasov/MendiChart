@@ -22,7 +22,7 @@ class ChartAdapter(private val context: Context) : RecyclerView.Adapter<ChartVie
 
     private val differ = AsyncListDiffer(this, callback)
 
-    lateinit var chartUtils: ChartUtils
+    var chartUtils: ChartUtils? = null
 
     val list: List<ChartItemWrapper>
         get() = differ.currentList
@@ -30,7 +30,9 @@ class ChartAdapter(private val context: Context) : RecyclerView.Adapter<ChartVie
     fun submitList(list: List<ChartItemWrapper>?) {
         if (list == null) return
         differ.submitList(list)
-        chartUtils = ChartUtils(context, list.map { it.item })
+        if (chartUtils == null) {
+            chartUtils = ChartUtils(context, list.map { it.item })
+        }
     }
 
     fun getItem(position: Int) = list[position]
@@ -56,10 +58,11 @@ class ChartAdapter(private val context: Context) : RecyclerView.Adapter<ChartVie
 
     override fun onBindViewHolder(holder: ChartViewHolder, position: Int) {
         val item = list[position]
+        val utils = chartUtils ?: return
         when (holder) {
-            is DayViewHolder -> holder.bind(chartUtils, item)
-            is MonthViewHolder -> holder.bind(chartUtils, item)
-            is SixMonthViewHolder -> holder.bind(chartUtils, item)
+            is DayViewHolder -> holder.bind(utils, item)
+            is MonthViewHolder -> holder.bind(utils, item)
+            is SixMonthViewHolder -> holder.bind(utils, item)
         }
     }
 }
