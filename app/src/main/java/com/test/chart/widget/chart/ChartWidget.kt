@@ -1,4 +1,4 @@
-package com.test.chart.widget
+package com.test.chart.widget.chart
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,14 +9,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.widget.FrameLayout
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_IDLE
+import androidx.recyclerview.widget.RecyclerView.*
 import com.test.chart.R
 import com.test.chart.databinding.WidgetDayChartBinding
 import com.test.chart.dp
 import com.test.chart.px
+import com.test.chart.widget.ChartCallback
+import com.test.chart.widget.ChartUtils
+import com.test.chart.widget.ItemCoordinates
 import com.test.chart.widget.adapter.ChartAdapter
 import com.test.chart.widget.adapter.ChartItemDecoration
 import com.test.chart.widget.adapter.ChartSnapHelper
@@ -25,7 +27,7 @@ import com.test.chart.widget.adapter.model.ChartItemWrapper
 import com.test.chart.widget.adapter.model.FocusState
 import kotlin.math.roundToInt
 
-class ChartWidget @JvmOverloads constructor(
+abstract class ChartWidget @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyle: Int = 0
@@ -33,12 +35,24 @@ class ChartWidget @JvmOverloads constructor(
 
     private val TAG = "ChartWidget"
 
-    private val binding = WidgetDayChartBinding.inflate(LayoutInflater.from(context), this)
+    protected val binding = WidgetDayChartBinding.inflate(LayoutInflater.from(context), this)
+
+    protected abstract val itemsRange: Int
 
     private val chartAdapter: ChartAdapter by lazy { ChartAdapter(context) }
 
+    private var chartLayoutManagerFirstInit = false
     private val chartLayoutManager by lazy {
-        LinearLayoutManager(context).apply {
+        val layoutManager = object : LinearLayoutManager(context) {
+            override fun onLayoutCompleted(state: State?) {
+                super.onLayoutCompleted(state)
+                if (!chartLayoutManagerFirstInit) {
+                    scrollHandler.postDelayed(visibleRangeChangedEvent, scrollIdleDelay)
+                    chartLayoutManagerFirstInit = true
+                }
+            }
+        }
+        layoutManager.apply {
             orientation = LinearLayoutManager.HORIZONTAL
             stackFromEnd = true
         }
@@ -55,12 +69,12 @@ class ChartWidget @JvmOverloads constructor(
         shouldIntercept = true
     }
 
-    private val scrollIdleDelay = 250L
+    private val scrollIdleDelay = 200L
     private val scrollHandler = Handler()
-    private val onScrollEvent = Runnable {
+    private val visibleRangeChangedEvent = Runnable {
         Log.d(TAG, "onScroll")
-        resizeChartItems()
         chartCallback?.selectedChartItemList(getCurrentVisibleList())
+        resizeChartItems()
     }
 
     private var chartCallback: ChartCallback? = null
@@ -69,14 +83,16 @@ class ChartWidget @JvmOverloads constructor(
         this.chartCallback = chartCallback
     }
 
-    var chartData: List<ChartItemWrapper> = emptyList()
+    protected var chartData: List<ChartItemWrapper> = emptyList()
         set(value) {
             field = value
-            chartAdapter.submitList(list = chartData)
+            chartAdapter.submitList(
+                chartData,
+                ChartUtils(context, value.subList(value.lastIndex + 1 - itemsRange, value.lastIndex + 1).map { it.item })
+            )
         }
 
     init {
-        setBackgroundColor(ContextCompat.getColor(context, R.color.chart_background_color))
         setupRecycler()
         setupLabels()
     }
@@ -115,11 +131,14 @@ class ChartWidget @JvmOverloads constructor(
             val snapHelper = ChartSnapHelper()
             snapHelper.attachToRecyclerView(this)
             addItemDecoration(ChartItemDecoration(context))
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            addOnScrollListener(object : OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                    if (newState == SCROLL_STATE_IDLE) {
-                        scrollHandler.removeCallbacks(onScrollEvent)
-                        scrollHandler.postDelayed(onScrollEvent, scrollIdleDelay)
+                    when (newState) {
+                        SCROLL_STATE_DRAGGING, SCROLL_STATE_SETTLING -> scrollHandler.removeCallbacks(visibleRangeChangedEvent)
+                        SCROLL_STATE_IDLE -> {
+                            scrollHandler.removeCallbacks(visibleRangeChangedEvent)
+                            scrollHandler.postDelayed(visibleRangeChangedEvent, scrollIdleDelay)
+                        }
                     }
                     super.onScrollStateChanged(recyclerView, newState)
                 }
@@ -148,7 +167,7 @@ class ChartWidget @JvmOverloads constructor(
         chartAdapter.chartUtils = ChartUtils(context, getCurrentVisibleList())
         chartAdapter.notifyItemRangeChanged(
             chartLayoutManager.findFirstCompletelyVisibleItemPosition(),
-            chartLayoutManager.findLastVisibleItemPosition()
+            chartLayoutManager.findLastCompletelyVisibleItemPosition()
         )
     }
 
@@ -156,7 +175,7 @@ class ChartWidget @JvmOverloads constructor(
         if (chartData.isEmpty()) return emptyList()
         return chartData.subList(
             fromIndex = chartLayoutManager.findFirstCompletelyVisibleItemPosition(),
-            toIndex = chartLayoutManager.findLastVisibleItemPosition()
+            toIndex = chartLayoutManager.findLastCompletelyVisibleItemPosition() + 1
         ).map { it.item }
     }
 
@@ -181,16 +200,14 @@ class ChartWidget @JvmOverloads constructor(
                     clearFocusStates()
                 }
             }
+            MotionEvent.ACTION_UP -> clearFocusStates()
         }
         return true
     }
 
     override fun dispatchTouchEvent(event: MotionEvent?): Boolean {
         when (event?.action) {
-            MotionEvent.ACTION_UP -> {
-                clearFocusStates()
-                removeTouchCallback()
-            }
+            MotionEvent.ACTION_UP -> removeTouchCallback()
         }
         return super.dispatchTouchEvent(event)
     }

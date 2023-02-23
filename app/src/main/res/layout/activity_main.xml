@@ -25,22 +25,10 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"/>
 
-        <com.test.chart.widget.ChartWidget
+        <com.test.chart.widget.chart.DayChartWidget
             android:id="@+id/dayChart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
-
-        <com.test.chart.widget.ChartWidget
-            android:id="@+id/monthChart"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <com.test.chart.widget.ChartWidget
-            android:id="@+id/sixMonthChart"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
     </LinearLayout>
 </FrameLayout>

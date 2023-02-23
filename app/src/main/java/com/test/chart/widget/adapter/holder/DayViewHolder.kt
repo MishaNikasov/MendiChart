@@ -3,6 +3,7 @@ package com.test.chart.widget.adapter.holder
 import android.view.ViewGroup
 import com.test.chart.*
 import com.test.chart.databinding.ItemChartBinding
+import com.test.chart.widget.ChartType
 import kotlin.math.roundToInt
 
 class DayViewHolder(private val binding: ItemChartBinding): ChartViewHolder(binding) {
@@ -13,7 +14,7 @@ class DayViewHolder(private val binding: ItemChartBinding): ChartViewHolder(bind
     }
 
     override val cellWidth: Int
-        get() = context.resources.displayMetrics.widthPixels/7
+        get() = context.resources.displayMetrics.widthPixels / ChartType.Days.itemsRange
 
     override val itemWidth: Int
         get() = (cellWidth * 0.7).roundToInt()

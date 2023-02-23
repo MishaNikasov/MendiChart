@@ -27,11 +27,10 @@ class ChartAdapter(private val context: Context) : RecyclerView.Adapter<ChartVie
     val list: List<ChartItemWrapper>
         get() = differ.currentList
 
-    fun submitList(list: List<ChartItemWrapper>?) {
-        if (list == null) return
+    fun submitList(list: List<ChartItemWrapper>, chartUtils: ChartUtils) {
         differ.submitList(list)
-        if (chartUtils == null) {
-            chartUtils = ChartUtils(context, list.map { it.item })
+        if (this.chartUtils == null) {
+            this.chartUtils = chartUtils
         }
     }
 
