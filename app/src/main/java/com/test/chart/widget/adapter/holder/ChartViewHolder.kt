@@ -6,11 +6,11 @@ import android.widget.FrameLayout
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.test.chart.byPattern
-import com.test.chart.context
+import com.test.chart.widget.utils.byPattern
+import com.test.chart.widget.utils.context
 import com.test.chart.databinding.ItemChartBinding
-import com.test.chart.widget.ActivityType
-import com.test.chart.widget.ChartUtils
+import com.test.chart.widget.model.ActivityType
+import com.test.chart.widget.utils.ChartUtils
 import com.test.chart.widget.adapter.model.ChartItemWrapper
 import com.test.chart.widget.adapter.model.FocusState
 

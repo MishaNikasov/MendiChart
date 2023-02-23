@@ -14,16 +14,16 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.*
 import com.test.chart.R
 import com.test.chart.databinding.WidgetDayChartBinding
-import com.test.chart.dp
-import com.test.chart.px
-import com.test.chart.widget.ChartCallback
-import com.test.chart.widget.ChartUtils
-import com.test.chart.widget.ItemCoordinates
-import com.test.chart.widget.RangeSummary
+import com.test.chart.widget.utils.dp
+import com.test.chart.widget.utils.px
+import com.test.chart.widget.utils.ChartCallback
+import com.test.chart.widget.utils.ChartUtils
+import com.test.chart.widget.model.ItemCoordinates
+import com.test.chart.widget.model.Summary
 import com.test.chart.widget.adapter.ChartAdapter
 import com.test.chart.widget.adapter.ChartItemDecoration
 import com.test.chart.widget.adapter.ChartSnapHelper
-import com.test.chart.widget.adapter.model.ChartItem
+import com.test.chart.widget.model.ChartItem
 import com.test.chart.widget.adapter.model.ChartItemWrapper
 import com.test.chart.widget.adapter.model.FocusState
 import kotlin.math.roundToInt
@@ -48,7 +48,7 @@ abstract class ChartWidget @JvmOverloads constructor(
             override fun onLayoutCompleted(state: State?) {
                 super.onLayoutCompleted(state)
                 if (!chartLayoutManagerFirstInit) {
-                    scrollHandler.postDelayed(visibleRangeChangedEvent, scrollIdleDelay)
+                    scrollHandler.post(visibleRangeChangedEvent)
                     chartLayoutManagerFirstInit = true
                 }
             }
@@ -155,20 +155,30 @@ abstract class ChartWidget @JvmOverloads constructor(
             else
                 ChartItemWrapper(wrapper.item, FocusState.OutOfFocus)
         }
+        chartCallback?.summary(createDaySummary(chartItem))
         chartCallback?.selectChartItem(chartItem)
     }
 
+    private fun createDaySummary(chartItem: ChartItem) = Summary.DaySummary(
+        day = chartItem.date,
+        neuralActivity = chartItem.neuralActivity.roundToInt(),
+        control = chartItem.control.roundToInt(),
+        resilience = chartItem.resilience.roundToInt(),
+    )
+
     private fun clearFocusStates() {
         chartData = chartData.map { wrapper -> ChartItemWrapper(wrapper.item, FocusState.Preview) }
-        chartCallback?.clearSelection()
+        chartAdapter.chartUtils?.getRangeSummary()?.let { summary ->
+            chartCallback?.summary(summary)
+        }
     }
 
     private fun handleRangeChanging() {
         val utils = ChartUtils(context, getCurrentVisibleList())
-        val summary = utils.getSummary()
+        val summary = utils.getRangeSummary()
         chartAdapter.chartUtils = utils
 
-        chartCallback?.rangeSummary(summary)
+        chartCallback?.summary(summary)
         updateSummaryValues(summary)
 
         chartAdapter.notifyItemRangeChanged(
@@ -178,7 +188,7 @@ abstract class ChartWidget @JvmOverloads constructor(
     }
 
     @SuppressLint("SetTextI18n")
-    private fun updateSummaryValues(summary: RangeSummary) {
+    private fun updateSummaryValues(summary: Summary.RangeSummary) {
         with(binding) {
             neutralActivityValue.text = "+${summary.neuralActivity}%"
             controlValue.text = "${summary.control}s"

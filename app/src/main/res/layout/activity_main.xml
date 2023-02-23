@@ -11,24 +11,17 @@
         android:layout_gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/item"
-            android:textSize="20sp"
-            android:layout_margin="16dp"
+        <com.test.chart.widget.summary.WidgetSummary
+            android:layout_marginHorizontal="18dp"
+            android:id="@+id/summaryWidget"
             android:layout_width="match_parent"
-            android:layout_height="30dp"/>
-
-        <TextView
-            android:id="@+id/itemList"
-            android:textSize="20sp"
-            android:layout_margin="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"/>
+            android:layout_height="wrap_content" />
 
         <com.test.chart.widget.chart.DayChartWidget
             android:id="@+id/dayChart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp" />
     </LinearLayout>
 </FrameLayout>

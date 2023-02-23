@@ -1,4 +1,4 @@
-package com.test.chart.widget
+package com.test.chart.widget.model
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -9,6 +9,30 @@ enum class ActivityType {
     NeuralActivity,
     Control,
     Resilience;
+
+    val title: (Context) -> String = { context ->
+        when(this) {
+            NeuralActivity -> context.getString(R.string.neural_activity)
+            Control -> context.getString(R.string.control)
+            Resilience -> context.getString(R.string.resilience)
+        }
+    }
+
+    val textColor: (Context) -> Int = { context ->
+        when(this) {
+            NeuralActivity -> ContextCompat.getColor(context, R.color.neural_activity_color)
+            Control -> ContextCompat.getColor(context, R.color.control_color)
+            Resilience -> ContextCompat.getColor(context, R.color.resilience_color)
+        }
+    }
+
+    val brightTextColor: (Context) -> Int = { context ->
+        when(this) {
+            NeuralActivity -> ContextCompat.getColor(context, R.color.neural_activity_color_bright)
+            Control -> ContextCompat.getColor(context, R.color.control_color_bright)
+            Resilience -> ContextCompat.getColor(context, R.color.resilience_color_bright)
+        }
+    }
 
     val selectedBg: (Context) -> Drawable = { context ->
         when (this) {

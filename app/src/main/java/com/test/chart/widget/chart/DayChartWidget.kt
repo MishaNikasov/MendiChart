@@ -2,8 +2,8 @@ package com.test.chart.widget.chart
 
 import android.content.Context
 import android.util.AttributeSet
-import com.test.chart.widget.ChartType
-import com.test.chart.widget.adapter.model.ChartItem
+import com.test.chart.widget.model.ChartType
+import com.test.chart.widget.model.ChartItem
 import com.test.chart.widget.adapter.model.ChartItemWrapper
 import com.test.chart.widget.adapter.model.FocusState
 

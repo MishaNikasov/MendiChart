@@ -4,14 +4,12 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.test.chart.data.LocalDateUtils
-import com.test.chart.data.LocalDateUtils.getCurrentMonthWrapper
 import com.test.chart.data.MonthWrapper
-import com.test.chart.widget.adapter.model.ChartItemWrapper
-import com.test.chart.widget.adapter.model.FocusState
 import com.test.chart.databinding.ActivityMainBinding
-import com.test.chart.widget.ChartCallback
-import com.test.chart.widget.RangeSummary
-import com.test.chart.widget.adapter.model.ChartItem
+import com.test.chart.widget.utils.ChartCallback
+import com.test.chart.widget.model.Summary
+import com.test.chart.widget.model.ChartItem
+import com.test.chart.widget.utils.generateId
 import java.time.Month
 import kotlin.random.Random
 
@@ -83,19 +81,17 @@ class MainActivity : AppCompatActivity(), ChartCallback {
 //    }
 
     override fun selectChartItem(item: ChartItem) {
-        Log.d("TAG", "$item")
-        val itemText = "${item.date.byPattern("d, MMM")}"
-        binding.item.text = itemText
+//        Log.d("TAG", "$item")
+//        val itemText = "${item.date.byPattern("d, MMM")}"
+//        binding.item.text = itemText
     }
 
-    override fun rangeSummary(rangeSummary: RangeSummary) {
-        val itemListText = "${rangeSummary.items[0].date.byPattern("d, MMM")} - ${rangeSummary.items[rangeSummary.items.lastIndex].date.byPattern("d, MMM")}"
-        binding.itemList.text = itemListText
-        Log.d("TAG", "$rangeSummary.items")
-    }
-
-    override fun clearSelection() {
-        binding.item.text = ""
+    override fun summary(summary: Summary) {
+        Log.d("TAG", "summary: $summary")
+        binding.summaryWidget.data = summary
+//        val itemListText = "${summary.items[0].date.byPattern("d, MMM")} - ${summary.items[summary.items.lastIndex].date.byPattern("d, MMM")}"
+//        binding.itemList.text = itemListText
+//        Log.d("TAG", "$summary.items")
     }
 
 }

@@ -1,4 +1,4 @@
-package com.test.chart
+package com.test.chart.widget.utils
 
 import android.content.Context
 import android.content.res.Resources
@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.DimenRes
 import androidx.recyclerview.widget.RecyclerView
-import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
 import java.time.temporal.TemporalAccessor
 import java.util.*

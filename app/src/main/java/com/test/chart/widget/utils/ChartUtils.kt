@@ -1,11 +1,11 @@
-package com.test.chart.widget
+package com.test.chart.widget.utils
 
 import android.content.Context
 import com.test.chart.R
-import com.test.chart.dp
-import com.test.chart.dpToPxInt
-import com.test.chart.widget.ActivityType.*
-import com.test.chart.widget.adapter.model.ChartItem
+import com.test.chart.widget.model.ActivityType.*
+import com.test.chart.widget.model.ChartItem
+import com.test.chart.widget.model.ActivityType
+import com.test.chart.widget.model.Summary
 import kotlin.math.roundToInt
 
 data class ChartUtils(val context: Context, private val list: List<ChartItem>) {
@@ -27,9 +27,9 @@ data class ChartUtils(val context: Context, private val list: List<ChartItem>) {
         }
     }
 
-    fun getSummary(): RangeSummary {
-        return RangeSummary(
-            items = list,
+    fun getRangeSummary(): Summary.RangeSummary {
+        return Summary.RangeSummary(
+            range = list.map { it.date },
             neuralActivity = list.map { it.neuralActivity }.average().roundToInt(),
             control = list.map { it.control }.average().roundToInt(),
             resilience = list.map { it.resilience }.average().roundToInt()

@@ -9,9 +9,9 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.test.chart.R
-import com.test.chart.byPattern
-import com.test.chart.px
-import com.test.chart.widget.adapter.model.ChartItem
+import com.test.chart.widget.utils.byPattern
+import com.test.chart.widget.utils.px
+import com.test.chart.widget.model.ChartItem
 import com.test.chart.widget.adapter.model.FocusState
 import kotlin.math.roundToInt
 

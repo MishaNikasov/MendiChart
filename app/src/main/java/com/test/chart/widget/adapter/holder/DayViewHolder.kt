@@ -3,7 +3,9 @@ package com.test.chart.widget.adapter.holder
 import android.view.ViewGroup
 import com.test.chart.*
 import com.test.chart.databinding.ItemChartBinding
-import com.test.chart.widget.ChartType
+import com.test.chart.widget.model.ChartType
+import com.test.chart.widget.utils.context
+import com.test.chart.widget.utils.inflater
 import kotlin.math.roundToInt
 
 class DayViewHolder(private val binding: ItemChartBinding): ChartViewHolder(binding) {

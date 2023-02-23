@@ -3,6 +3,9 @@ package com.test.chart.widget.adapter.holder
 import android.view.ViewGroup
 import com.test.chart.*
 import com.test.chart.databinding.ItemChartBinding
+import com.test.chart.widget.utils.context
+import com.test.chart.widget.utils.inflater
+import com.test.chart.widget.utils.px
 import kotlin.math.roundToInt
 
 class SixMonthViewHolder(private val binding: ItemChartBinding): ChartViewHolder(binding) {

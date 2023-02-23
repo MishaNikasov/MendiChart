@@ -1,4 +1,4 @@
-package com.test.chart.widget
+package com.test.chart.widget.model
 
 enum class ChartType {
     Days,

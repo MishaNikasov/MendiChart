@@ -1,10 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="chart_background_color">#F3F2EE</color>
+
+    <color name="summary_range_text_color">#2A3441</color>
+    <color name="summary_day_text_color">#FFFFFF</color>
+
+    <color name="summary_range_bg_color">#F3F2EE</color>
+    <color name="summary_day_bg_color">#2A3441</color>
+
+    <color name="cell_stroke_color">#BCBCBC</color>
+    <color name="date_label_text_color">#646B74</color>
+
+    <color name="neural_activity_color_bright">#AC85EC</color>
+    <color name="control_color_bright">#D980D0</color>
+    <color name="resilience_color_bright">#FA8965</color>
+
+    <color name="neural_activity_color">#6D4DA3</color>
+    <color name="control_color">#B460AB</color>
+    <color name="resilience_color">#E37B5A</color>
+
+    <color name="neural_activity_dash_color">#806D4DA3</color>
+    <color name="control_dash_color">#80B460AB</color>
+    <color name="resilience_dash_color">#80E37B5A</color>
+
 </resources>
