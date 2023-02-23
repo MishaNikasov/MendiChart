@@ -6,6 +6,7 @@ import com.test.chart.dp
 import com.test.chart.dpToPxInt
 import com.test.chart.widget.ActivityType.*
 import com.test.chart.widget.adapter.model.ChartItem
+import kotlin.math.roundToInt
 
 data class ChartUtils(val context: Context, private val list: List<ChartItem>) {
 
@@ -24,6 +25,15 @@ data class ChartUtils(val context: Context, private val list: List<ChartItem>) {
             Control -> dpToPxInt((value / controlMaxValue) * maxItemHeight)
             Resilience -> dpToPxInt((value / resilienceMaxValue) * maxItemHeight)
         }
+    }
+
+    fun getSummary(): RangeSummary {
+        return RangeSummary(
+            items = list,
+            neuralActivity = list.map { it.neuralActivity }.average().roundToInt(),
+            control = list.map { it.control }.average().roundToInt(),
+            resilience = list.map { it.resilience }.average().roundToInt()
+        )
     }
 
 }

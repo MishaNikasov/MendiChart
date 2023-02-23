@@ -10,6 +10,7 @@ import com.test.chart.widget.adapter.model.ChartItemWrapper
 import com.test.chart.widget.adapter.model.FocusState
 import com.test.chart.databinding.ActivityMainBinding
 import com.test.chart.widget.ChartCallback
+import com.test.chart.widget.RangeSummary
 import com.test.chart.widget.adapter.model.ChartItem
 import java.time.Month
 import kotlin.random.Random
@@ -49,9 +50,9 @@ class MainActivity : AppCompatActivity(), ChartCallback {
                 ChartItem.DayItem(
                     id = generateId(),
                     date = day,
-                    neuralActivity = Random.nextInt(2, 20).toFloat(),
-                    control = Random.nextInt(2, 20).toFloat(),
-                    resilience = Random.nextInt(2, 20).toFloat()))
+                    neuralActivity = Random.nextInt(5, 30).toFloat(),
+                    control = Random.nextInt(3, 20).toFloat(),
+                    resilience = Random.nextInt(300, 2600).toFloat()))
         }
         //.subList(0,4)
         dayList = q
@@ -87,10 +88,10 @@ class MainActivity : AppCompatActivity(), ChartCallback {
         binding.item.text = itemText
     }
 
-    override fun selectedChartItemList(listItem: List<ChartItem>) {
-        val itemListText = "${listItem[0].date.byPattern("d, MMM")} - ${listItem[listItem.lastIndex].date.byPattern("d, MMM")}"
+    override fun rangeSummary(rangeSummary: RangeSummary) {
+        val itemListText = "${rangeSummary.items[0].date.byPattern("d, MMM")} - ${rangeSummary.items[rangeSummary.items.lastIndex].date.byPattern("d, MMM")}"
         binding.itemList.text = itemListText
-        Log.d("TAG", "$listItem")
+        Log.d("TAG", "$rangeSummary.items")
     }
 
     override fun clearSelection() {

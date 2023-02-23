@@ -1,6 +1,5 @@
 package com.test.chart.widget.adapter
 
-import android.content.Context
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -13,7 +12,7 @@ import com.test.chart.widget.adapter.holder.MonthViewHolder
 import com.test.chart.widget.adapter.holder.SixMonthViewHolder
 import com.test.chart.widget.adapter.model.ChartItemWrapper
 
-class ChartAdapter(private val context: Context) : RecyclerView.Adapter<ChartViewHolder>() {
+class ChartAdapter : RecyclerView.Adapter<ChartViewHolder>() {
 
     private val callback = object : DiffUtil.ItemCallback<ChartItemWrapper>() {
         override fun areItemsTheSame(oldItem: ChartItemWrapper, newItem: ChartItemWrapper) = oldItem.item.id == newItem.item.id

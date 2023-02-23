@@ -19,6 +19,7 @@ import com.test.chart.px
 import com.test.chart.widget.ChartCallback
 import com.test.chart.widget.ChartUtils
 import com.test.chart.widget.ItemCoordinates
+import com.test.chart.widget.RangeSummary
 import com.test.chart.widget.adapter.ChartAdapter
 import com.test.chart.widget.adapter.ChartItemDecoration
 import com.test.chart.widget.adapter.ChartSnapHelper
@@ -35,11 +36,11 @@ abstract class ChartWidget @JvmOverloads constructor(
 
     private val TAG = "ChartWidget"
 
-    protected val binding = WidgetDayChartBinding.inflate(LayoutInflater.from(context), this)
+    private val binding = WidgetDayChartBinding.inflate(LayoutInflater.from(context), this)
 
     protected abstract val itemsRange: Int
 
-    private val chartAdapter: ChartAdapter by lazy { ChartAdapter(context) }
+    private val chartAdapter: ChartAdapter by lazy { ChartAdapter() }
 
     private var chartLayoutManagerFirstInit = false
     private val chartLayoutManager by lazy {
@@ -73,8 +74,7 @@ abstract class ChartWidget @JvmOverloads constructor(
     private val scrollHandler = Handler()
     private val visibleRangeChangedEvent = Runnable {
         Log.d(TAG, "onScroll")
-        chartCallback?.selectedChartItemList(getCurrentVisibleList())
-        resizeChartItems()
+        handleRangeChanging()
     }
 
     private var chartCallback: ChartCallback? = null
@@ -163,12 +163,27 @@ abstract class ChartWidget @JvmOverloads constructor(
         chartCallback?.clearSelection()
     }
 
-    private fun resizeChartItems() {
-        chartAdapter.chartUtils = ChartUtils(context, getCurrentVisibleList())
+    private fun handleRangeChanging() {
+        val utils = ChartUtils(context, getCurrentVisibleList())
+        val summary = utils.getSummary()
+        chartAdapter.chartUtils = utils
+
+        chartCallback?.rangeSummary(summary)
+        updateSummaryValues(summary)
+
         chartAdapter.notifyItemRangeChanged(
             chartLayoutManager.findFirstCompletelyVisibleItemPosition(),
             chartLayoutManager.findLastCompletelyVisibleItemPosition()
         )
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun updateSummaryValues(summary: RangeSummary) {
+        with(binding) {
+            neutralActivityValue.text = "+${summary.neuralActivity}%"
+            controlValue.text = "${summary.control}s"
+            resilienceValue.text = "${summary.resilience}p"
+        }
     }
 
     private fun getCurrentVisibleList(): List<ChartItem> {

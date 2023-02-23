@@ -87,10 +87,10 @@
             android:gravity="center"
             android:paddingHorizontal="4dp"
             android:paddingVertical="2dp"
-            android:text="+25%"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="+25%" />
     </LinearLayout>
 
     <LinearLayout
@@ -120,10 +120,10 @@
             android:gravity="center"
             android:paddingHorizontal="4dp"
             android:paddingVertical="2dp"
-            android:text="20s"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="20s" />
     </LinearLayout>
 
     <LinearLayout
@@ -151,10 +151,10 @@
             android:gravity="center"
             android:paddingHorizontal="4dp"
             android:paddingVertical="2dp"
-            android:text="2456p"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="2456p" />
     </LinearLayout>
 
 </merge>

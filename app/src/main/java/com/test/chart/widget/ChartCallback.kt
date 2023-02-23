@@ -4,6 +4,6 @@ import com.test.chart.widget.adapter.model.ChartItem
 
 interface ChartCallback {
     fun selectChartItem(item: ChartItem)
-    fun selectedChartItemList(listItem: List<ChartItem>)
+    fun rangeSummary(rangeSummary: RangeSummary)
     fun clearSelection()
 }
