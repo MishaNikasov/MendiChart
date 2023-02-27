@@ -13,8 +13,8 @@ class DayChartWidget @JvmOverloads constructor(
     defStyle: Int = 0
 ) : ChartWidget(context, attrs, defStyle) {
 
-    override val itemsRange: Int
-        get() = ChartType.Days.itemsRange
+    override val chartType: ChartType
+        get() = ChartType.Days
 
     var dayList: List<ChartItem.DayItem> = emptyList()
         set(value) {

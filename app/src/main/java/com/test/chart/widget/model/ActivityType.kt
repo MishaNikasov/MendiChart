@@ -10,6 +10,14 @@ enum class ActivityType {
     Control,
     Resilience;
 
+    fun convertText(value: String): String {
+        return when(this) {
+            NeuralActivity -> "+$value%"
+            Control -> "${value}s"
+            Resilience -> "${value}p"
+        }
+    }
+
     val title: (Context) -> String = { context ->
         when(this) {
             NeuralActivity -> context.getString(R.string.neural_activity)
@@ -31,6 +39,14 @@ enum class ActivityType {
             NeuralActivity -> ContextCompat.getColor(context, R.color.neural_activity_color_bright)
             Control -> ContextCompat.getColor(context, R.color.control_color_bright)
             Resilience -> ContextCompat.getColor(context, R.color.resilience_color_bright)
+        }
+    }
+
+    val dashColor: (Context) -> Int = { context ->
+        when(this) {
+            NeuralActivity -> ContextCompat.getColor(context, R.color.neural_activity_dash_color)
+            Control -> ContextCompat.getColor(context, R.color.control_dash_color)
+            Resilience -> ContextCompat.getColor(context, R.color.resilience_dash_color)
         }
     }
 

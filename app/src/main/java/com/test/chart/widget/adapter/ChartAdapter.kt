@@ -1,18 +1,19 @@
 package com.test.chart.widget.adapter
 
+import android.content.Context
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.test.chart.widget.model.ChartItem
 import com.test.chart.widget.utils.ChartUtils
 import com.test.chart.widget.adapter.holder.ChartViewHolder
 import com.test.chart.widget.adapter.holder.DayViewHolder
 import com.test.chart.widget.adapter.holder.MonthViewHolder
 import com.test.chart.widget.adapter.holder.SixMonthViewHolder
 import com.test.chart.widget.adapter.model.ChartItemWrapper
+import com.test.chart.widget.model.ChartType
 
-class ChartAdapter : RecyclerView.Adapter<ChartViewHolder>() {
+class ChartAdapter(private val context: Context, private val chartType: ChartType) : RecyclerView.Adapter<ChartViewHolder>() {
 
     private val callback = object : DiffUtil.ItemCallback<ChartItemWrapper>() {
         override fun areItemsTheSame(oldItem: ChartItemWrapper, newItem: ChartItemWrapper) = oldItem.item.id == newItem.item.id
@@ -21,25 +22,31 @@ class ChartAdapter : RecyclerView.Adapter<ChartViewHolder>() {
 
     private val differ = AsyncListDiffer(this, callback)
 
-    var chartUtils: ChartUtils? = null
+    private var chartUtils: ChartUtils? = null
 
     val list: List<ChartItemWrapper>
         get() = differ.currentList
 
-    fun submitList(list: List<ChartItemWrapper>, chartUtils: ChartUtils) {
+    fun submitList(list: List<ChartItemWrapper>) {
         differ.submitList(list)
-        if (this.chartUtils == null) {
-            this.chartUtils = chartUtils
-        }
+        if (chartUtils == null) { this.chartUtils = ChartUtils(context, list.map { it.item }) }
     }
+
+    fun setCurrentCalculationRange(from: Int, to: Int) {
+        chartUtils?.range = Pair(from, to)
+    }
+
+    fun getSummary() = chartUtils?.getRangeSummary()
+
+    fun getAverages() = chartUtils?.getAverageValues()
 
     fun getItem(position: Int) = list[position]
 
     override fun getItemViewType(position: Int): Int {
-        return when (list[position].item) {
-            is ChartItem.DayItem -> DayViewHolder.ITEM_TYPE
-            is ChartItem.MonthItem -> MonthViewHolder.ITEM_TYPE
-            is ChartItem.SixMonthItem -> SixMonthViewHolder.ITEM_TYPE
+        return when (chartType) {
+            ChartType.Days -> DayViewHolder.ITEM_TYPE
+            ChartType.Weeks -> MonthViewHolder.ITEM_TYPE
+            ChartType.SixWeeks -> SixMonthViewHolder.ITEM_TYPE
         }
     }
 

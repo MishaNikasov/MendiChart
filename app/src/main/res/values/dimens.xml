@@ -11,7 +11,7 @@
     <dimen name="six_month_chart_item_width">8dp</dimen>
 
     <dimen name="label_text_size">12sp</dimen>
-    <dimen name="label_top_margin">2dp</dimen>
+    <dimen name="label_top_margin">4dp</dimen>
     <dimen name="label_start_margin">16dp</dimen>
     <dimen name="date_label_start_margin">4dp</dimen>
     <dimen name="chart_item_max_height">70dp</dimen>

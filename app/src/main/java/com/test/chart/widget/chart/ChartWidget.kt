@@ -2,30 +2,29 @@ package com.test.chart.widget.chart
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Rect
+import android.graphics.*
 import android.os.Handler
+import android.text.TextPaint
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.widget.FrameLayout
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.*
 import com.test.chart.R
 import com.test.chart.databinding.WidgetDayChartBinding
-import com.test.chart.widget.utils.dp
-import com.test.chart.widget.utils.px
-import com.test.chart.widget.utils.ChartCallback
-import com.test.chart.widget.utils.ChartUtils
-import com.test.chart.widget.model.ItemCoordinates
-import com.test.chart.widget.model.Summary
 import com.test.chart.widget.adapter.ChartAdapter
 import com.test.chart.widget.adapter.ChartItemDecoration
 import com.test.chart.widget.adapter.ChartSnapHelper
-import com.test.chart.widget.model.ChartItem
 import com.test.chart.widget.adapter.model.ChartItemWrapper
 import com.test.chart.widget.adapter.model.FocusState
+import com.test.chart.widget.model.*
+import com.test.chart.widget.utils.ChartCallback
+import com.test.chart.widget.utils.px
 import kotlin.math.roundToInt
 
 abstract class ChartWidget @JvmOverloads constructor(
@@ -38,9 +37,9 @@ abstract class ChartWidget @JvmOverloads constructor(
 
     private val binding = WidgetDayChartBinding.inflate(LayoutInflater.from(context), this)
 
-    protected abstract val itemsRange: Int
+    protected abstract val chartType: ChartType
 
-    private val chartAdapter: ChartAdapter by lazy { ChartAdapter() }
+    private val chartAdapter: ChartAdapter by lazy { ChartAdapter(context, chartType) }
 
     private var chartLayoutManagerFirstInit = false
     private val chartLayoutManager by lazy {
@@ -66,14 +65,14 @@ abstract class ChartWidget @JvmOverloads constructor(
     private val longPressDelay = 75L
     private val touchHandler = Handler()
     private val onLongPressEvent = Runnable {
-        Log.d(TAG, "Long press")
+        Log.d(TAG, "onLongPressEvent")
         shouldIntercept = true
     }
 
     private val scrollIdleDelay = 200L
     private val scrollHandler = Handler()
     private val visibleRangeChangedEvent = Runnable {
-        Log.d(TAG, "onScroll")
+        Log.d(TAG, "visibleRangeChangedEvent")
         handleRangeChanging()
     }
 
@@ -86,40 +85,12 @@ abstract class ChartWidget @JvmOverloads constructor(
     protected var chartData: List<ChartItemWrapper> = emptyList()
         set(value) {
             field = value
-            chartAdapter.submitList(
-                chartData,
-                ChartUtils(context, value.subList(value.lastIndex + 1 - itemsRange, value.lastIndex + 1).map { it.item })
-            )
+            chartAdapter.submitList(chartData)
         }
 
     init {
         setupRecycler()
-        setupLabels()
-    }
-
-    private fun setupLabels() {
-        with(binding) {
-            val headerCellHeight = context.px(R.dimen.header_cell_height).roundToInt()
-            val itemCellHeight = context.px(R.dimen.item_cell_height).roundToInt()
-            val labelStartMargin = context.px(R.dimen.label_start_margin).roundToInt()
-            val labelTopMargin = context.px(R.dimen.label_top_margin).roundToInt()
-
-            val neuralActivityLp = neuralActivityLabel.layoutParams
-            neuralActivityLabel.layoutParams = LayoutParams(neuralActivityLp.height, neuralActivityLp.width).apply {
-                val topMargin = (headerCellHeight * 2) + labelTopMargin
-                setMargins(16.dp(), topMargin, 0, 0)
-            }
-            val controlLabelLp = controlLabel.layoutParams
-            controlLabel.layoutParams = LayoutParams(controlLabelLp.height, controlLabelLp.width).apply {
-                val topMargin = (headerCellHeight * 2) + itemCellHeight + labelTopMargin
-                setMargins(labelStartMargin, topMargin, 0, 0)
-            }
-            val resilienceLabelLp = resilienceLabel.layoutParams
-            resilienceLabel.layoutParams = LayoutParams(resilienceLabelLp.height, resilienceLabelLp.width).apply {
-                val topMargin = (headerCellHeight * 2) + (itemCellHeight * 2) + labelTopMargin
-                setMargins(labelStartMargin, topMargin, 0, 0)
-            }
-        }
+        setWillNotDraw(false)
     }
 
     private fun setupRecycler() {
@@ -168,40 +139,18 @@ abstract class ChartWidget @JvmOverloads constructor(
 
     private fun clearFocusStates() {
         chartData = chartData.map { wrapper -> ChartItemWrapper(wrapper.item, FocusState.Preview) }
-        chartAdapter.chartUtils?.getRangeSummary()?.let { summary ->
-            chartCallback?.summary(summary)
-        }
+        chartAdapter.getSummary()?.let { chartCallback?.summary(it) }
     }
 
     private fun handleRangeChanging() {
-        val utils = ChartUtils(context, getCurrentVisibleList())
-        val summary = utils.getRangeSummary()
-        chartAdapter.chartUtils = utils
-
-        chartCallback?.summary(summary)
-        updateSummaryValues(summary)
-
-        chartAdapter.notifyItemRangeChanged(
-            chartLayoutManager.findFirstCompletelyVisibleItemPosition(),
-            chartLayoutManager.findLastCompletelyVisibleItemPosition()
-        )
-    }
-
-    @SuppressLint("SetTextI18n")
-    private fun updateSummaryValues(summary: Summary.RangeSummary) {
-        with(binding) {
-            neutralActivityValue.text = "+${summary.neuralActivity}%"
-            controlValue.text = "${summary.control}s"
-            resilienceValue.text = "${summary.resilience}p"
+        val from = chartLayoutManager.findFirstCompletelyVisibleItemPosition()
+        val to = chartLayoutManager.findLastCompletelyVisibleItemPosition()
+        with(chartAdapter) {
+            setCurrentCalculationRange(from, to)
+            getSummary()?.let { summary -> chartCallback?.summary(summary) }
+            notifyItemRangeChanged(from, to)
         }
-    }
-
-    private fun getCurrentVisibleList(): List<ChartItem> {
-        if (chartData.isEmpty()) return emptyList()
-        return chartData.subList(
-            fromIndex = chartLayoutManager.findFirstCompletelyVisibleItemPosition(),
-            toIndex = chartLayoutManager.findLastCompletelyVisibleItemPosition() + 1
-        ).map { it.item }
+        invalidate()
     }
 
     private fun getItemAtPosition(coordinates: ItemCoordinates): ChartItemWrapper? {
@@ -263,4 +212,112 @@ abstract class ChartWidget @JvmOverloads constructor(
         tapCoordinates = null
         shouldIntercept = false
     }
+
+    private val DASH_GAP = 10f
+
+    private val textPaint: TextPaint
+        get() = TextPaint().apply {
+            isAntiAlias = true
+            style = Paint.Style.FILL
+            color = ContextCompat.getColor(context, R.color.white)
+            typeface = ResourcesCompat.getFont(context, R.font.dm_sans_bold)
+            textSize = context.px(R.dimen.label_text_size)
+        }
+
+    private val textBackgroundPaint: Paint
+        get() = Paint().apply {
+            isAntiAlias = true
+            style = Paint.Style.FILL
+        }
+
+    private val dashLinePaint: Paint
+        get() = Paint().apply {
+            isAntiAlias = true
+            pathEffect = DashPathEffect(floatArrayOf(DASH_GAP, DASH_GAP), 0f)
+            style = Paint.Style.STROKE
+            strokeWidth = 2f
+        }
+
+    override fun dispatchDraw(canvas: Canvas) {
+        super.dispatchDraw(canvas)
+        canvas.save()
+        drawLabels(canvas)
+        drawAverages(canvas)
+        canvas.restore()
+    }
+
+    private fun drawLabels(canvas: Canvas) {
+        val headerCellHeight = context.px(R.dimen.header_cell_height)
+        val itemCellHeight = context.px(R.dimen.item_cell_height)
+        val labelTopMargin = context.px(R.dimen.label_top_margin)
+        ActivityType.values().forEach { type ->
+            val top = when (type) {
+                ActivityType.NeuralActivity -> (headerCellHeight * 2) + labelTopMargin
+                ActivityType.Control -> (headerCellHeight * 2) + (itemCellHeight) + labelTopMargin
+                ActivityType.Resilience -> (headerCellHeight * 2) + (itemCellHeight * 2) + labelTopMargin
+            }
+            canvas.drawLabel(
+                text = type.title(context),
+                top = top,
+                textColor = type.textColor(context)
+            )
+        }
+    }
+
+    private fun drawAverages(canvas: Canvas) {
+        val headerCellHeight = context.px(R.dimen.header_cell_height)
+        val itemCellHeight = context.px(R.dimen.item_cell_height)
+        chartAdapter.getAverages()?.let { averages ->
+            ActivityType.values().forEach { type ->
+                val top = when (type) {
+                    ActivityType.NeuralActivity -> (headerCellHeight * 2) + (itemCellHeight) - averages.neuralActivity.height
+                    ActivityType.Control -> (headerCellHeight * 2) + (itemCellHeight * 2) - averages.control.height
+                    ActivityType.Resilience -> (headerCellHeight * 2) + (itemCellHeight * 3) - averages.resilience.height
+                }
+                val value = when (type) {
+                    ActivityType.NeuralActivity -> averages.neuralActivity.value.roundToInt()
+                    ActivityType.Control -> averages.control.value.roundToInt()
+                    ActivityType.Resilience -> averages.resilience.value.roundToInt()
+                }
+                canvas.drawAverageValue(
+                    text = type.convertText(value.toString()),
+                    top = top,
+                    bgColor = type.textColor(context),
+                    dashLineColor = type.dashColor(context)
+                )
+            }
+        }
+    }
+
+    private fun Canvas.drawAverageValue(text: String, top: Float, bgColor: Int, dashLineColor: Int) {
+        val endMargin = context.px(R.dimen.label_start_margin)
+        val textBounds = Rect()
+        textPaint.getTextBounds(text, 0, text.length, textBounds)
+        val textHeight = textBounds.height()
+        val textWidth = textPaint.measureText(text)
+        val start = width - (textPaint.measureText(text)) - endMargin
+
+        drawLine(0f, top, start, top, dashLinePaint.apply { color = dashLineColor })
+        drawRoundRect(getTextBackgroundRect(start, top, textHeight, textWidth), 10f, 10f, textBackgroundPaint.apply { color = bgColor })
+        drawText(text, start, top + (textHeight / 2), textPaint)
+    }
+
+    private fun Canvas.drawLabel(text: String, top: Float, textColor: Int) {
+        val textBounds = Rect()
+        textPaint.getTextBounds(text, 0, text.length, textBounds)
+        val textHeight = textBounds.height()
+        val textWidth = textPaint.measureText(text)
+        val textTop = top + textHeight
+
+        val labelStart = context.px(R.dimen.label_start_margin)
+
+        drawRoundRect(getTextBackgroundRect(labelStart, textTop, textHeight, textWidth), 10f, 10f, textBackgroundPaint.apply {
+            color = ContextCompat.getColor(context, R.color.chart_background_color)
+        })
+        drawText(text, labelStart, textTop + (textHeight / 2), textPaint.apply { color = textColor })
+    }
+
+    private fun getTextBackgroundRect(x: Float, y: Float, textHeight: Int, textWidth: Float) =
+        RectF(x - 10, y - textHeight, x + textWidth + 10, y + textHeight)
+
 }

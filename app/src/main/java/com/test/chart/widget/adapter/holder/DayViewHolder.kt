@@ -8,11 +8,11 @@ import com.test.chart.widget.utils.context
 import com.test.chart.widget.utils.inflater
 import kotlin.math.roundToInt
 
-class DayViewHolder(private val binding: ItemChartBinding): ChartViewHolder(binding) {
+class DayViewHolder(private val binding: ItemChartBinding, private val parentWidth: Int): ChartViewHolder(binding) {
 
     companion object {
         val ITEM_TYPE = R.layout.item_chart + 1
-        fun inflate(parent: ViewGroup) = DayViewHolder(ItemChartBinding.inflate(parent.inflater, parent, false))
+        fun inflate(parent: ViewGroup) = DayViewHolder(ItemChartBinding.inflate(parent.inflater, parent, false), parent.width)
     }
 
     override val cellWidth: Int
