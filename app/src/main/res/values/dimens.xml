@@ -4,6 +4,10 @@
     <dimen name="day_chart_cell_width">40dp</dimen>
     <dimen name="day_chart_item_width">26dp</dimen>
 
+    <dimen name="chart_left_margin">24dp</dimen>
+    <dimen name="chart_right_margin">98dp</dimen>
+    <dimen name="values_horizontal_margin">3dp</dimen>
+
     <dimen name="month_chart_cell_width">12dp</dimen>
     <dimen name="month_chart_item_width">7dp</dimen>
 
@@ -12,7 +16,7 @@
 
     <dimen name="label_text_size">12sp</dimen>
     <dimen name="label_top_margin">4dp</dimen>
-    <dimen name="label_start_margin">16dp</dimen>
+    <dimen name="label_start_margin">8dp</dimen>
     <dimen name="date_label_start_margin">4dp</dimen>
     <dimen name="chart_item_max_height">70dp</dimen>
     <dimen name="header_cell_height">20dp</dimen>

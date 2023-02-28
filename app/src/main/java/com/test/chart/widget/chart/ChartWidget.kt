@@ -290,12 +290,15 @@ abstract class ChartWidget @JvmOverloads constructor(
     }
 
     private fun Canvas.drawAverageValue(text: String, top: Float, bgColor: Int, dashLineColor: Int) {
-        val endMargin = context.px(R.dimen.label_start_margin)
+        //need to calculating same height for all text
+        val placeholderText = "10"
+        val rightMargin = context.px(R.dimen.chart_right_margin)
+        val valuesHorizontalMargin = context.px(R.dimen.values_horizontal_margin)
         val textBounds = Rect()
-        textPaint.getTextBounds(text, 0, text.length, textBounds)
+        textPaint.getTextBounds(placeholderText, 0, placeholderText.length, textBounds)
         val textHeight = textBounds.height()
         val textWidth = textPaint.measureText(text)
-        val start = width - (textPaint.measureText(text)) - endMargin
+        val start = width - rightMargin + valuesHorizontalMargin * 2
 
         drawLine(0f, top, start, top, dashLinePaint.apply { color = dashLineColor })
         drawRoundRect(getTextBackgroundRect(start, top, textHeight, textWidth), 10f, 10f, textBackgroundPaint.apply { color = bgColor })
@@ -309,7 +312,7 @@ abstract class ChartWidget @JvmOverloads constructor(
         val textWidth = textPaint.measureText(text)
         val textTop = top + textHeight
 
-        val labelStart = context.px(R.dimen.label_start_margin)
+        val labelStart = context.px(R.dimen.label_start_margin) + context.px(R.dimen.chart_left_margin)
 
         drawRoundRect(getTextBackgroundRect(labelStart, textTop, textHeight, textWidth), 10f, 10f, textBackgroundPaint.apply {
             color = ContextCompat.getColor(context, R.color.chart_background_color)
@@ -318,6 +321,6 @@ abstract class ChartWidget @JvmOverloads constructor(
     }
 
     private fun getTextBackgroundRect(x: Float, y: Float, textHeight: Int, textWidth: Float) =
-        RectF(x - 10, y - textHeight, x + textWidth + 10, y + textHeight)
+        RectF(x - context.px(R.dimen.values_horizontal_margin), y - textHeight, x + textWidth + context.px(R.dimen.values_horizontal_margin), y + textHeight)
 
 }

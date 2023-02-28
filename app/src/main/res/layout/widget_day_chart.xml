@@ -10,6 +10,8 @@
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingStart="@dimen/chart_left_margin"
+        android:paddingEnd="@dimen/chart_right_margin"
         android:overScrollMode="never"
         tools:itemCount="1"
         tools:listitem="@layout/item_chart" />
