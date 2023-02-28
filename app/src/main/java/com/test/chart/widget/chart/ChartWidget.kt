@@ -156,7 +156,11 @@ abstract class ChartWidget @JvmOverloads constructor(
     private fun getItemAtPosition(coordinates: ItemCoordinates): ChartItemWrapper? {
         with(binding.recycler) {
             findChildViewUnder(coordinates.x, coordinates.y)?.let {
-                return chartAdapter.list[getChildAdapterPosition(it)]
+                val position = getChildAdapterPosition(it)
+                if (position > chartLayoutManager.findLastCompletelyVisibleItemPosition() ||
+                    position < chartLayoutManager.findFirstCompletelyVisibleItemPosition())
+                    return null
+                return chartAdapter.list[position]
             } ?: return null
         }
     }

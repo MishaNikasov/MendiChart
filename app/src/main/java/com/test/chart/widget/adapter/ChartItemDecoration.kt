@@ -79,13 +79,17 @@ class ChartItemDecoration(private val context: Context) : ItemDecoration() {
                     val textBottomPosition = bottom.toFloat() - context.px(R.dimen.footer_cell_height) - (context.px(R.dimen.label_text_size) / 2)
                     canvas.drawText(dateText, textStartPos, textTopPosition, textPaint)
                     canvas.drawText(dateText, textStartPos, textBottomPosition, textPaint)
-                    canvas.drawLine(
-                        left.toFloat(),
-                        top.toFloat() + context.px(R.dimen.header_cell_height),
-                        left.toFloat(),
-                        bottom.toFloat() - +context.px(R.dimen.footer_cell_height),
-                        dashLinePaint
-                    )
+                    if (position == 0) {
+                        canvas.drawLine(left.toFloat(), top.toFloat(), left.toFloat(), bottom.toFloat(), linePaint)
+                    } else {
+                        canvas.drawLine(
+                            left.toFloat(),
+                            top.toFloat() + context.px(R.dimen.header_cell_height),
+                            left.toFloat(),
+                            bottom.toFloat() - +context.px(R.dimen.footer_cell_height),
+                            dashLinePaint
+                        )
+                    }
                 }
                 is ChartItem.MonthItem -> {
                     if (monthHighlightDay.contains(item.date.dayOfMonth)) {

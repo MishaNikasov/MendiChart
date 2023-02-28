@@ -5,7 +5,7 @@
     <dimen name="day_chart_item_width">26dp</dimen>
 
     <dimen name="chart_left_margin">24dp</dimen>
-    <dimen name="chart_right_margin">98dp</dimen>
+    <dimen name="chart_right_margin">72dp</dimen>
     <dimen name="values_horizontal_margin">3dp</dimen>
 
     <dimen name="month_chart_cell_width">12dp</dimen>
