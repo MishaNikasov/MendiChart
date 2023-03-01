@@ -160,7 +160,9 @@ abstract class ChartWidget @JvmOverloads constructor(
                 if (position > chartLayoutManager.findLastCompletelyVisibleItemPosition() ||
                     position < chartLayoutManager.findFirstCompletelyVisibleItemPosition())
                     return null
-                return chartAdapter.list[position]
+                val item = chartAdapter.list[position]
+                if (item.item.isPlaceholder) return null
+                else return item
             } ?: return null
         }
     }

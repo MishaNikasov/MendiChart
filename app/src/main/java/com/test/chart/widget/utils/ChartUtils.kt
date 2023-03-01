@@ -11,7 +11,7 @@ data class ChartUtils(val context: Context, private val rawList: List<ChartItem>
     var range: Pair<Int, Int>? = null
 
     private val rangedList: List<ChartItem>
-        get() = range?.let { rawList.subList(it.first, it.second + 1) } ?: emptyList()
+        get() = range?.let { rawList.subList(it.first, it.second + 1).filter { item -> !item.isPlaceholder } } ?: emptyList()
 
     private val maxItemHeight: Float
         get() = context.dp(R.dimen.chart_item_max_height)

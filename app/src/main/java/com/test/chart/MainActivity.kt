@@ -10,6 +10,7 @@ import com.test.chart.widget.utils.ChartCallback
 import com.test.chart.widget.model.Summary
 import com.test.chart.widget.model.ChartItem
 import com.test.chart.widget.utils.generateId
+import java.time.LocalDate
 import java.time.Month
 import kotlin.random.Random
 
@@ -48,9 +49,11 @@ class MainActivity : AppCompatActivity(), ChartCallback {
                 ChartItem.DayItem(
                     id = generateId(),
                     date = day,
+                    score = Random.nextInt(10, 100),
                     neuralActivity = Random.nextInt(5, 30).toFloat(),
                     control = Random.nextInt(3, 20).toFloat(),
-                    resilience = Random.nextInt(300, 2600).toFloat()))
+                    resilience = Random.nextInt(300, 2600).toFloat()
+                ))
         }
         //.subList(0,4)
         dayList = q
