@@ -24,6 +24,8 @@ abstract class ChartViewHolder(private val binding: ItemChartBinding) : Recycler
 
     abstract val itemWidth: Int
 
+    abstract val highlightDate: Boolean
+
     fun bind(
         chartUtils: ChartUtils,
         wrapper: ChartItemWrapper
@@ -70,6 +72,8 @@ abstract class ChartViewHolder(private val binding: ItemChartBinding) : Recycler
                     control.background = ActivityType.Control.selectedBg(context)
                     resilience.background = ActivityType.Resilience.selectedBg(context)
                     selectedOverlay.isVisible = true
+                    topDate.isInvisible = !highlightDate
+                    bottomDate.isInvisible = !highlightDate
                 }
                 FocusState.OutOfFocus -> {
                     neuralActivity.background = ActivityType.NeuralActivity.unselectedBg(context)

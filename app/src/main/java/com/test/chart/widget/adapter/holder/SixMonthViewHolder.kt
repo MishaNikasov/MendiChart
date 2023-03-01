@@ -27,4 +27,6 @@ class SixMonthViewHolder(private val binding: ItemChartBinding): ChartViewHolder
     override val dateTextSize: Float
         get() = 10f
 
+    override val highlightDate: Boolean
+        get() = false
 }

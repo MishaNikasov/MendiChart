@@ -1,16 +1,16 @@
 package com.test.chart.widget.model
 
 enum class ChartType {
-    Days,
-    Weeks,
-    SixWeeks;
+    Week,
+    Month,
+    SixMonth;
 
     val itemsRange: Int
         get() {
             return when(this) {
-                Days -> 7
-                Weeks -> 30
-                SixWeeks -> 31
+                Week -> 7
+                Month -> 30
+                SixMonth -> 31
             }
         }
 }

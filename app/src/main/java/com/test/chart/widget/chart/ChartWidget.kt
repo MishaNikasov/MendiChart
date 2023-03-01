@@ -132,6 +132,7 @@ abstract class ChartWidget @JvmOverloads constructor(
 
     private fun createDaySummary(chartItem: ChartItem) = Summary.DaySummary(
         day = chartItem.date,
+        score = chartItem.score,
         neuralActivity = chartItem.neuralActivity.roundToInt(),
         control = chartItem.control.roundToInt(),
         resilience = chartItem.resilience.roundToInt(),

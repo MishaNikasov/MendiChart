@@ -44,9 +44,9 @@ class ChartAdapter(private val context: Context, private val chartType: ChartTyp
 
     override fun getItemViewType(position: Int): Int {
         return when (chartType) {
-            ChartType.Days -> DayViewHolder.ITEM_TYPE
-            ChartType.Weeks -> MonthViewHolder.ITEM_TYPE
-            ChartType.SixWeeks -> SixMonthViewHolder.ITEM_TYPE
+            ChartType.Week -> DayViewHolder.ITEM_TYPE
+            ChartType.Month -> MonthViewHolder.ITEM_TYPE
+            ChartType.SixMonth -> SixMonthViewHolder.ITEM_TYPE
         }
     }
 

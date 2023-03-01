@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <com.test.chart.widget.chart.DayChartWidget
+        <com.test.chart.widget.chart.MonthChartWidget
             android:id="@+id/dayChart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

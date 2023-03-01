@@ -28,6 +28,7 @@ data class ChartUtils(val context: Context, private val rawList: List<ChartItem>
     fun getRangeSummary(): Summary.RangeSummary? {
         if (rangedList.isEmpty()) return null
         return Summary.RangeSummary(
+            score = rangedList.map { it.score }.average().roundToInt(),
             range = rangedList.map { it.date },
             neuralActivity = rangedList.map { it.neuralActivity }.average().roundToInt(),
             control = rangedList.map { it.control }.average().roundToInt(),

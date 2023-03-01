@@ -105,10 +105,8 @@ class ChartItemDecoration(private val context: Context) : ItemDecoration() {
                             canvas.drawText(monthText, textStartPos, topPosition, textPaint)
                             canvas.drawText(monthText, textStartPos, bottomPosition, textPaint)
                         }
-                        if (chartItemWrapper.focusState != FocusState.InFocus) {
-                            canvas.drawText(dateText, textStartPos, textTopPosition, textPaint)
-                            canvas.drawText(dateText, textStartPos, textBottomPosition, textPaint)
-                        }
+                        canvas.drawText(dateText, textStartPos, textTopPosition, textPaint)
+                        canvas.drawText(dateText, textStartPos, textBottomPosition, textPaint)
                         if (item.date.dayOfMonth == 1) {
                             canvas.drawLine(left.toFloat(), top.toFloat(), left.toFloat(), bottom.toFloat(), linePaint)
                         } else {

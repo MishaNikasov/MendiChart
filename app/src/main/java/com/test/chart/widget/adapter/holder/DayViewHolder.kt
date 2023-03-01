@@ -17,9 +17,7 @@ class DayViewHolder(private val binding: ItemChartBinding, private val parentWid
     }
 
     override val cellWidth: Int
-        get() =
-            (context.resources.displayMetrics.widthPixels -
-                    (context.px(R.dimen.chart_left_margin).roundToInt() + context.px(R.dimen.chart_right_margin).roundToInt())) / ChartType.Days.itemsRange
+        get() = (context.resources.displayMetrics.widthPixels - (context.px(R.dimen.chart_left_margin).roundToInt() + context.px(R.dimen.chart_right_margin).roundToInt())) / ChartType.Week.itemsRange
 
     override val itemWidth: Int
         get() = (cellWidth * 0.7).roundToInt()
@@ -29,5 +27,8 @@ class DayViewHolder(private val binding: ItemChartBinding, private val parentWid
 
     override val dateTextSize: Float
         get() = 12f
+
+    override val highlightDate: Boolean
+        get() = true
 
 }

@@ -6,6 +6,7 @@ import com.test.chart.R
 import java.time.LocalDate
 
 sealed class Summary(
+    open val score: Int,
     open val neuralActivity: Int,
     open val control: Int,
     open val resilience: Int,
@@ -13,17 +14,19 @@ sealed class Summary(
 
     data class DaySummary(
         val day: LocalDate,
+        override val score: Int,
         override val neuralActivity: Int,
         override val control: Int,
         override val resilience: Int
-    ) : Summary(neuralActivity, control, resilience)
+    ) : Summary(score, neuralActivity, control, resilience)
 
     data class RangeSummary(
         val range: List<LocalDate>,
+        override val score: Int,
         override val neuralActivity: Int,
         override val control: Int,
         override val resilience: Int
-    ) : Summary(neuralActivity, control, resilience)
+    ) : Summary(score, neuralActivity, control, resilience)
 
     val textColor: (Context) -> Int = { context ->
         when (this) {

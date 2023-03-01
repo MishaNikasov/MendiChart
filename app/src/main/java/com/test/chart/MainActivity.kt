@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity(), ChartCallback {
 
     private lateinit var binding: ActivityMainBinding
 
-    private var dayList: List<ChartItem.DayItem> = emptyList()
+    private var dayList: List<ChartItem.MonthItem> = emptyList()
         set(value) {
             field = value
             binding.dayChart.dayList = value
@@ -41,12 +41,13 @@ class MainActivity : AppCompatActivity(), ChartCallback {
     }
 
     private fun setupDayChart() {
-        val q = mutableListOf<ChartItem.DayItem>()
+        val q = mutableListOf<ChartItem.MonthItem>()
         LocalDateUtils.getMonthDayList(
+            MonthWrapper(Month.JANUARY),
             MonthWrapper(Month.FEBRUARY)
         ).forEach { day ->
             q.add(
-                ChartItem.DayItem(
+                ChartItem.MonthItem(
                     id = generateId(),
                     date = day,
                     score = Random.nextInt(10, 100),

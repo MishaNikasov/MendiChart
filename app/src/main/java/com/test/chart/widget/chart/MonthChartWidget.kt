@@ -7,16 +7,16 @@ import com.test.chart.widget.model.ChartItem
 import com.test.chart.widget.adapter.model.ChartItemWrapper
 import com.test.chart.widget.adapter.model.FocusState
 
-class DayChartWidget @JvmOverloads constructor(
+class MonthChartWidget @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyle: Int = 0
 ) : ChartWidget(context, attrs, defStyle) {
 
     override val chartType: ChartType
-        get() = ChartType.Week
+        get() = ChartType.Month
 
-    var dayList: List<ChartItem.DayItem> = emptyList()
+    var dayList: List<ChartItem.MonthItem> = emptyList()
         set(value) {
             field = value
             chartData = value.map { ChartItemWrapper(it, FocusState.Preview) }

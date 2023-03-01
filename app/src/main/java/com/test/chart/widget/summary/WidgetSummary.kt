@@ -21,7 +21,7 @@ class WidgetSummary @JvmOverloads constructor(
 
     private val binding = WidgetActivitySummaryBinding.inflate(LayoutInflater.from(context), this)
 
-    var data: Summary = Summary.RangeSummary(emptyList(), 0, 0, 0)
+    var data: Summary = Summary.RangeSummary(emptyList(), 0, 0, 0, 0)
         set(value) {
             field = value
             refresh()
@@ -37,6 +37,7 @@ class WidgetSummary @JvmOverloads constructor(
     private fun refresh() {
         with(binding) {
             val textColor = data.textColor(context)
+            summ.text = data.score.toString()
             with(neuralActivityItem) {
                 val labelColor = when(data) {
                     is Summary.DaySummary -> ActivityType.NeuralActivity.brightTextColor(context)
