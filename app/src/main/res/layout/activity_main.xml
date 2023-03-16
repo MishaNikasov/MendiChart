@@ -11,13 +11,13 @@
         android:layout_gravity="center"
         android:orientation="vertical">
 
-        <com.test.chart.widget.summary.WidgetSummary
+        <com.test.chartlib.widget.summary.WidgetSummary
             android:layout_marginHorizontal="18dp"
             android:id="@+id/summaryWidget"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <com.test.chart.widget.chart.MonthChartWidget
+        <com.test.chartlib.widget.chart.MonthChartWidget
             android:id="@+id/dayChart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

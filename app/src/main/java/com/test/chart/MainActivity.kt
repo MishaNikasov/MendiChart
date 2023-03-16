@@ -6,11 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.test.chart.data.LocalDateUtils
 import com.test.chart.data.MonthWrapper
 import com.test.chart.databinding.ActivityMainBinding
-import com.test.chart.widget.utils.ChartCallback
-import com.test.chart.widget.model.Summary
-import com.test.chart.widget.model.ChartItem
-import com.test.chart.widget.utils.generateId
-import java.time.LocalDate
+import com.test.chartlib.widget.utils.ChartCallback
+import com.test.chartlib.widget.model.Summary
+import com.test.chartlib.widget.model.ChartItem
+import com.test.chartlib.widget.utils.generateId
 import java.time.Month
 import kotlin.random.Random
 

@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "MendiChart"
 include ':app'
+include ':chartlib'
