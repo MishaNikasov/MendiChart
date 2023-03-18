@@ -11,14 +11,14 @@ data class ChartUtils(val context: Context, private val rawList: List<ChartItem>
     var range: Pair<Int, Int>? = null
 
     private val rangedList: List<ChartItem>
-        get() = range?.let { rawList.subList(it.first, it.second + 1).filter { item -> !item.isPlaceholder } } ?: emptyList()
+        get() = if (rawList.isEmpty()) emptyList() else range?.let { rawList.subList(it.first, it.second + 1).filter { item -> !item.isPlaceholder } } ?: emptyList()
 
     private val maxItemHeight: Float
         get() = context.dp(R.dimen.chart_item_max_height)
 
     fun calculateCellHeight(value: Float, type: ActivityType): Int {
         if (rangedList.isEmpty()) return 0
-        return when(type) {
+        return when (type) {
             NeuralActivity -> dpToPxInt((value / rangedList.maxOf { it.neuralActivity }) * maxItemHeight)
             Control -> dpToPxInt((value / rangedList.maxOf { it.control }) * maxItemHeight)
             Resilience -> dpToPxInt((value / rangedList.maxOf { it.resilience }) * maxItemHeight)
